@@ -357,7 +357,7 @@ function initRSVP() {
     {
       name: "Gia đình Bác Hùng",
       role: "Họ hàng nhà trai",
-      message: "Mừng ngày thành hôn của cháu Bình. Chúc chú rể luôn là bờ vai vững chãi, hai cháu yêu thương hòa thuận, bách niên giai lão!",
+      message: "Chúc mừng hạnh phúc hai cháu! Chúc chú rể luôn là bờ vai vững chãi, hai cháu yêu thương hòa thuận, bách niên giai lão!",
       time: "Hôm qua"
     },
     {
