@@ -153,7 +153,7 @@ function populateForm(data) {
   setVal("footer-thanks", data.footer?.thanks || data.footerThanks);
 
   // 2. Sự kiện & Thời gian
-  setVal("ceremony-tag", data.ceremony?.tag || "TIỆC MỪNG THÂN MẬT");
+  setVal("ceremony-tag", data.ceremony?.tag || "LỄ THÀNH HÔN");
   setVal("ceremony-title", data.ceremony?.title || "TIỆC MỪNG THÂN MẬT");
   setVal("ceremony-subtitle", data.ceremony?.subtitle || "Được Tổ Chức Tại Nhà Trai");
   if (data.ceremony?.datetime) {
@@ -233,7 +233,7 @@ function collectFormData() {
   }
 
   weddingData.ceremony = {
-    tag: getVal("ceremony-tag") || "TIỆC MỪNG THÂN MẬT",
+    tag: getVal("ceremony-tag") || "LỄ THÀNH HÔN",
     title: getVal("ceremony-title") || "TIỆC MỪNG THÂN MẬT",
     subtitle: getVal("ceremony-subtitle") || "Được Tổ Chức Tại Nhà Trai",
     datetime: formattedDt,
@@ -282,7 +282,7 @@ function collectFormData() {
   // Hero & Music
   const defaultPhoto = currentAdminPage === "main" ? "img/hero-a2b.jpg" : "img/hero-groom.jpg";
   weddingData.hero = {
-    tag: getVal("ceremony-tag") || "TIỆC MỪNG THÂN MẬT",
+    tag: getVal("ceremony-tag") || "LỄ THÀNH HÔN",
     heading: "Thiệp Mừng Báo Hỷ",
     photo: getVal("hero-photo") || defaultPhoto
   };

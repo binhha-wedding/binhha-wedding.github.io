@@ -515,6 +515,10 @@ async function initDynamicData() {
 
   // Cập nhật Nghi lễ & Thời gian
   if (data.ceremony) {
+    if (data.ceremony.tag === "TIỆC MỪNG THÂN MẬT") {
+      data.ceremony.tag = "LỄ THÀNH HÔN";
+      try { localStorage.setItem(storageKey, JSON.stringify(data)); } catch (e) {}
+    }
     const tagEl = document.querySelector(".hero-ceremony-tag");
     if (tagEl && data.ceremony.tag) {
       tagEl.innerText = data.ceremony.tag;
