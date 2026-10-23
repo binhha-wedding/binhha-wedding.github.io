@@ -90,7 +90,7 @@ function initCountdown() {
   if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
 
   function update() {
-    const targetDate = window.TARGET_WEDDING_DATETIME || new Date("2026-11-27T09:00:00+07:00").getTime();
+    const targetDate = window.TARGET_WEDDING_DATETIME || new Date("2026-11-27T17:00:00+07:00").getTime();
     const now = new Date().getTime();
     const distance = targetDate - now;
 
@@ -476,7 +476,7 @@ function initCalendarButton() {
     const title = encodeURIComponent(btn.getAttribute("data-title") || "Tiệc Mừng Nhà Gái: Kiều Thu Hà & Nguyễn Hoàng Thiên Bình");
     const details = encodeURIComponent(btn.getAttribute("data-details") || "Tiệc Mừng được tổ chức tại Nhà Gái. Rất hân hạnh được đón tiếp quý khách!");
     const location = encodeURIComponent(btn.getAttribute("data-location") || "Thôn Trung Hưng, xã Hợp Thịnh, thành phố Bắc Ninh");
-    const dates = btn.getAttribute("data-dates") || "20261127T020000Z/20261127T050000Z";
+    const dates = btn.getAttribute("data-dates") || "20261127T100000Z/20261127T140000Z";
 
     const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dates}&details=${details}&location=${location}`;
 
