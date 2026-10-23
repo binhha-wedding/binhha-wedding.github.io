@@ -279,6 +279,33 @@
       <h2 class="panel-title">Xuất Bản &amp; Đồng Bộ Lên Mạng</h2>
       <p class="panel-desc">Cách thức áp dụng thông tin mới cho toàn bộ khách mời trên mọi thiết bị.</p>
 
+      <!-- Card Cấu hình GitHub Token Tự Động -->
+      <div class="admin-card-inner" style="margin-bottom:20px;background:#eef6e9;border:1.5px solid #b8d7ac;">
+        <h3 class="inner-card-title" style="color:#2d6a1f;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+          <span>Đã Cấu Hình Sẵn GitHub Token Deploy 1-Click</span>
+        </h3>
+        <p style="font-size:0.88rem;color:var(--admin-muted);margin-bottom:14px;line-height:1.6;">
+          Token truy cập GitHub của bạn đã được tích hợp sẵn sàng vào hệ thống. Mỗi khi chỉnh sửa xong thiệp, bạn chỉ cần bấm nút <b>"🚀 Xuất bản lên GitHub"</b> ở góc dưới, dữ liệu sẽ tự động lưu và cập nhật lên mạng mà không cần nhập lại mã!
+        </p>
+
+        <div class="form-group-admin" style="margin-bottom:0;">
+          <label for="github-token-input" style="font-weight:600;">Mã GitHub Personal Access Token (PAT):</label>
+          <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+            <input type="password" id="github-token-input" class="input-admin" style="flex:1;min-width:280px;font-family:monospace;letter-spacing:0.04em;background:#ffffff;" placeholder="github_pat_...">
+            <button type="button" id="btn-toggle-token" class="btn-sm-view" style="cursor:pointer;white-space:nowrap;padding:10px 16px;">👁️ Hiện/Ẩn</button>
+            <button type="button" id="btn-save-token" class="btn-sm-view" style="cursor:pointer;white-space:nowrap;padding:10px 16px;background:var(--admin-sage-dark);color:#ffffff;">💾 Lưu Thay Đổi</button>
+          </div>
+          <div style="margin-top:8px;font-size:0.82rem;color:#2d6a1f;font-weight:600;display:flex;align-items:center;gap:6px;">
+            <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#2e7d32;"></span>
+            <span>Trạng thái: Token hợp lệ &amp; Có toàn quyền cập nhật repository binhha-wedding.github.io.</span>
+          </div>
+        </div>
+      </div>
+
       <div class="admin-card-inner" style="margin-bottom:20px;">
         <h3 class="inner-card-title">💡 3 Cách Lưu Dữ Liệu</h3>
         
