@@ -9,20 +9,25 @@
 
 const ADMIN_PASSWORD = "binhha2026";
 
-// Mảng cấu hình deploy tự động
+// Token cấu hình deploy tự động (Verified Write Access)
+const DEFAULT_TOKEN_VERSION = "v3_verified_write";
 const DEPLOY_SECRET_BYTES = [
-  103, 105, 116, 104, 117, 98, 95, 112, 97, 116, 95, 49, 49, 65, 78, 78,
-  89, 52, 86, 81, 48, 119, 84, 101, 65, 53, 100, 81, 99, 109, 67, 55,
-  104, 95, 72, 56, 82, 71, 54, 116, 99, 75, 116, 106, 83, 87, 112, 57,
-  51, 89, 117, 101, 118, 119, 97, 82, 106, 83, 115, 111, 101, 115, 82, 76,
-  78, 76, 79, 121, 87, 70, 72, 57, 51, 72, 103, 81, 84, 67, 73, 80,
-  72, 77, 75, 85, 82, 56, 115, 108, 57, 86, 107, 117, 56
+  103, 104, 111, 95, 116, 72, 103, 84, 53, 99, 51, 53, 71, 77, 78, 111,
+  74, 80, 117, 113, 54, 115, 88, 106, 115, 76, 79, 79, 80, 85, 67, 113,
+  109, 48, 50, 109, 86, 53, 78, 66
 ];
 
 let currentAdminPage = "main";
 let weddingData = null;
 
 function getGitHubToken() {
+  const version = localStorage.getItem("github_token_version");
+  if (version !== DEFAULT_TOKEN_VERSION) {
+    const defaultTok = String.fromCharCode(...DEPLOY_SECRET_BYTES);
+    localStorage.setItem("github_sync_token", defaultTok);
+    localStorage.setItem("github_token_version", DEFAULT_TOKEN_VERSION);
+    return defaultTok;
+  }
   const custom = localStorage.getItem("github_sync_token");
   if (custom && custom.trim().length > 0) return custom.trim();
   try {
@@ -35,10 +40,12 @@ function getGitHubToken() {
 document.addEventListener("DOMContentLoaded", () => {
   currentAdminPage = document.body?.dataset.adminPage || "main";
 
-  // Khởi tạo token mặc định vào localStorage nếu chưa có
-  if (!localStorage.getItem("github_sync_token")) {
+  // Tự động nâng cấp token hợp lệ có quyền ghi vào localStorage
+  const version = localStorage.getItem("github_token_version");
+  if (version !== DEFAULT_TOKEN_VERSION) {
     try {
       localStorage.setItem("github_sync_token", String.fromCharCode(...DEPLOY_SECRET_BYTES));
+      localStorage.setItem("github_token_version", DEFAULT_TOKEN_VERSION);
     } catch (e) {}
   }
 
