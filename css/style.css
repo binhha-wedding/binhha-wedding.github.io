@@ -120,7 +120,7 @@ button {
   }
 }
 
-/* Minimalist Divider (Bỏ hoa lá) */
+/* Minimalist Divider (Mặc định ẩn) */
 .sprig-icon {
   display: none !important;
 }
@@ -143,6 +143,60 @@ button {
 
 .sec-divider::after {
   display: none;
+}
+
+/* ==========================================================================
+   HIỆU ỨNG CÂY HOA THẢO MỘC THEO TEMPLATE (RIÊNG TRANG BINHHA.HTML)
+   ========================================================================== */
+body.has-floral-effects .sprig-icon {
+  display: inline-block !important;
+  width: 28px;
+  height: 42px;
+  background-color: var(--sage);
+  -webkit-mask: var(--sprig) center / contain no-repeat;
+  mask: var(--sprig) center / contain no-repeat;
+  opacity: 0.85;
+}
+
+body.has-floral-effects .sec-divider {
+  gap: 16px;
+}
+
+body.has-floral-effects .sec-divider::before,
+body.has-floral-effects .sec-divider::after {
+  content: "";
+  display: block !important;
+  width: 48px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--border-line), transparent);
+}
+
+body.has-floral-effects .cal-date.wedding-day::after {
+  content: "" !important;
+  display: block !important;
+  position: absolute;
+  top: -12px;
+  right: -8px;
+  width: 16px;
+  height: 22px;
+  background-color: var(--sage-dark);
+  -webkit-mask: var(--sprig) center / contain no-repeat;
+  mask: var(--sprig) center / contain no-repeat;
+  transform: rotate(35deg);
+}
+
+body.has-floral-effects .wish-card::after {
+  content: "" !important;
+  display: block !important;
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 18px;
+  height: 28px;
+  background-color: var(--sage-light);
+  -webkit-mask: var(--sprig) center / contain no-repeat;
+  mask: var(--sprig) center / contain no-repeat;
+  opacity: 0.7;
 }
 
 /* Navigation Bar */

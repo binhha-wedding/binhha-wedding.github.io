@@ -5,8 +5,10 @@
  */
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Bỏ hiệu ứng hoa rơi theo yêu cầu
-  // initFallingPetals();
+  // Hiệu ứng hoa rơi (chỉ kích hoạt nếu trang có container #petals-container)
+  if (document.getElementById("petals-container")) {
+    initFallingPetals();
+  }
   initDynamicData();
   initCountdown();
   initAudioPlayer();
