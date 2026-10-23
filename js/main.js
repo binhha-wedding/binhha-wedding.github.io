@@ -246,15 +246,29 @@ function initLightbox() {
   const prevBtn = document.getElementById("lightbox-prev");
   const nextBtn = document.getElementById("lightbox-next");
   const items = document.querySelectorAll(".gallery-item img");
+  const heroFrame = document.getElementById("hero-photo-frame");
+  const heroZoomBtn = document.getElementById("btn-hero-zoom");
+  const heroImg = document.getElementById("hero-banner-img");
 
-  if (!modal || !imgEl || items.length === 0) return;
+  if (!modal || !imgEl) return;
 
   const images = Array.from(items).map(img => img.src);
   let currentIndex = 0;
 
   function showImage(index) {
+    if (images.length === 0) return;
     currentIndex = (index + images.length) % images.length;
     imgEl.src = images[currentIndex];
+    if (prevBtn) prevBtn.style.display = images.length > 1 ? "flex" : "none";
+    if (nextBtn) nextBtn.style.display = images.length > 1 ? "flex" : "none";
+    modal.classList.add("active");
+    document.body.style.overflow = "hidden";
+  }
+
+  function showSingleImage(src) {
+    imgEl.src = src;
+    if (prevBtn) prevBtn.style.display = "none";
+    if (nextBtn) nextBtn.style.display = "none";
     modal.classList.add("active");
     document.body.style.overflow = "hidden";
   }
@@ -270,20 +284,36 @@ function initLightbox() {
     });
   });
 
+  // Hỗ trợ mở xem ảnh cưới Hero banner Full Size
+  function openHeroFullSize() {
+    const src = heroImg ? (heroImg.currentSrc || heroImg.src) : "img/hero-groom.jpg";
+    showSingleImage(src);
+  }
+
+  if (heroFrame) {
+    heroFrame.addEventListener("click", openHeroFullSize);
+  }
+  if (heroZoomBtn) {
+    heroZoomBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      openHeroFullSize();
+    });
+  }
+
   if (closeBtn) closeBtn.addEventListener("click", closeModal);
   if (prevBtn) prevBtn.addEventListener("click", (e) => { e.stopPropagation(); showImage(currentIndex - 1); });
   if (nextBtn) nextBtn.addEventListener("click", (e) => { e.stopPropagation(); showImage(currentIndex + 1); });
 
   modal.addEventListener("click", (e) => {
-    if (e.target === modal) closeModal();
+    if (e.target === modal || e.target.classList.contains("lightbox-content")) closeModal();
   });
 
   // Bấm ESC hoặc phím mũi tên
   window.addEventListener("keydown", (e) => {
     if (!modal.classList.contains("active")) return;
     if (e.key === "Escape") closeModal();
-    if (e.key === "ArrowLeft") showImage(currentIndex - 1);
-    if (e.key === "ArrowRight") showImage(currentIndex + 1);
+    if (e.key === "ArrowLeft" && images.length > 1) showImage(currentIndex - 1);
+    if (e.key === "ArrowRight" && images.length > 1) showImage(currentIndex + 1);
   });
 
   // Hỗ trợ vuốt chạm trên điện thoại (touch swipe)
