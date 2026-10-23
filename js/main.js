@@ -486,13 +486,14 @@ function initCalendarButton() {
    8. TỰ ĐỘNG NẠP DỮ LIỆU ĐỘNG TỪ ADMIN / DATA JSON
    ========================================================================== */
 async function initDynamicData() {
-  // Nếu là trang nhà trai (data-page="groom"), không ghi đè dữ liệu của nhà gái
-  if (document.body && document.body.dataset.page === "groom") {
-    return;
-  }
+  const isBinhHaPage = window.location.pathname.includes("binhha.html") || 
+                       window.location.pathname.includes("/binhha/") ||
+                       window.location.pathname.endsWith("/binhha");
+  const storageKey = isBinhHaPage ? "binhha_admin_binhha_data" : "binhha_admin_main_data";
+  const jsonPath = isBinhHaPage ? `data/binhha-data.json?v=${Date.now()}` : `data/main-data.json?v=${Date.now()}`;
 
   let data = null;
-  const localSaved = localStorage.getItem("admin_wedding_data");
+  const localSaved = localStorage.getItem(storageKey);
   if (localSaved) {
     try {
       data = JSON.parse(localSaved);
@@ -501,7 +502,7 @@ async function initDynamicData() {
 
   if (!data) {
     try {
-      const res = await fetch(`data/wedding-data.json?v=${Date.now()}`);
+      const res = await fetch(jsonPath);
       if (res.ok) {
         data = await res.json();
       }
@@ -509,64 +510,6 @@ async function initDynamicData() {
   }
 
   if (!data) return;
-
-  // Cập nhật Cô Dâu
-  if (data.bride) {
-    const brideNameEl = document.querySelector("#couple .person-card:first-child .person-name");
-    if (brideNameEl && data.bride.name) brideNameEl.innerText = data.bride.name;
-    const brideImgEl = document.querySelector("#couple .person-card:first-child .person-photo-frame img, #couple .person-card:first-child .person-photo-circle img, #couple .person-card:first-child .person-photo-arch img");
-    if (brideImgEl && data.bride.photo) brideImgEl.src = data.bride.photo;
-    const brideParentsEl = document.querySelector("#couple .person-card:first-child .parents-names");
-    if (brideParentsEl) {
-      brideParentsEl.innerHTML = `
-        <span>Thân phụ: <b>${escapeHtml(data.bride.father || '')}</b></span>
-        <span>Thân mẫu: <b>${escapeHtml(data.bride.mother || '')}</b></span>
-      `;
-    }
-  }
-
-  // Cập nhật Chú Rể
-  if (data.groom) {
-    const groomNameEl = document.querySelector("#couple .person-card:last-child .person-name");
-    if (groomNameEl && data.groom.name) groomNameEl.innerText = data.groom.name;
-    const groomImgEl = document.querySelector("#couple .person-card:last-child .person-photo-frame img, #couple .person-card:last-child .person-photo-circle img, #couple .person-card:last-child .person-photo-arch img");
-    if (groomImgEl && data.groom.photo) groomImgEl.src = data.groom.photo;
-    const groomParentsEl = document.querySelector("#couple .person-card:last-child .parents-names");
-    if (groomParentsEl) {
-      groomParentsEl.innerHTML = `
-        <span>Thân phụ: <b>${escapeHtml(data.groom.father || '')}</b></span>
-        <span>Thân mẫu: <b>${escapeHtml(data.groom.mother || '')}</b></span>
-      `;
-    }
-  }
-
-  // Cập nhật Tên Hero & Brand
-  if (data.bride && data.groom) {
-    const brandEl = document.querySelector(".wd-brand");
-    if (brandEl) {
-      brandEl.innerHTML = `<span>THIỆP MỪNG BÁO HỶ</span>`;
-    }
-    const heroNamesEl = document.querySelector(".hero-names");
-    if (heroNamesEl) {
-      heroNamesEl.innerHTML = `
-        <span class="name">THU HÀ</span>
-        <span class="hero-connector">nên duyên với</span>
-        <span class="name">THIÊN BÌNH</span>
-      `;
-    }
-    const footerNamesEl = document.querySelector(".footer-names");
-    if (footerNamesEl) {
-      const bShort = data.bride.name.split(" ").pop();
-      const gShort = data.groom.name.split(" ").pop();
-      footerNamesEl.innerText = `${bShort} & ${gShort}`;
-    }
-  }
-
-  // Cập nhật Ảnh Hero
-  if (data.hero && data.hero.photo) {
-    const heroImgEl = document.querySelector("#hero-banner-img, .hero-bg-media img, .hero-photo-arch img");
-    if (heroImgEl) heroImgEl.src = data.hero.photo;
-  }
 
   // Cập nhật Nghi lễ & Thời gian
   if (data.ceremony) {
@@ -579,10 +522,6 @@ async function initDynamicData() {
     const heroLunarEl = document.querySelector(".hero-lunar-date");
     if (heroLunarEl && data.ceremony.lunarDate) heroLunarEl.innerText = `(${data.ceremony.lunarDate})`;
 
-    const cTitleEl = document.querySelector(".ceremony-main-title");
-    if (cTitleEl && data.ceremony.title) cTitleEl.innerText = data.ceremony.title;
-    const cSubEl = document.querySelector(".ceremony-sub");
-    if (cSubEl && data.ceremony.subtitle) cSubEl.innerText = data.ceremony.subtitle;
     const cTimeEl = document.querySelector(".ceremony-time-large");
     if (cTimeEl && data.ceremony.timeDisplay) cTimeEl.innerText = data.ceremony.timeDisplay;
     const cLunarEl = document.querySelector(".ceremony-lunar-highlight");
@@ -603,12 +542,45 @@ async function initDynamicData() {
     }
   }
 
-  // Cập nhật Lời tựa
+  // Cập nhật Ảnh Hero nếu admin đổi
+  if (data.hero && data.hero.photo) {
+    const heroImgEl = document.querySelector("#hero-banner-img");
+    if (heroImgEl) heroImgEl.src = data.hero.photo;
+    const heroSecEl = document.querySelector(".hero-section");
+    if (heroSecEl) {
+      heroSecEl.style.backgroundImage = `url('${data.hero.photo}')`;
+    }
+  }
+
+  // Cập nhật Thông điệp / Lời tựa
   if (data.quote) {
     const qTextEl = document.querySelector(".quote-text");
     if (qTextEl && data.quote.text) qTextEl.innerText = `“${data.quote.text}”`;
     const qAuthEl = document.querySelector(".quote-author");
     if (qAuthEl && data.quote.author) qAuthEl.innerText = data.quote.author;
+  }
+
+  // Cập nhật Lời cảm ơn Footer
+  if (data.footer && data.footer.thanks) {
+    const footerCopy = document.querySelector(".footer-copy");
+    if (footerCopy) footerCopy.innerText = data.footer.thanks;
+  }
+
+  // Cập nhật STK (cho trang chính)
+  if (data.gift && data.gift.enabled !== false) {
+    const accNumberEl = document.getElementById("acc-groom-text");
+    if (accNumberEl && data.gift.accountNumber) accNumberEl.innerText = data.gift.accountNumber;
+
+    const copyBtn = document.querySelector(".btn-copy-acc");
+    if (copyBtn && data.gift.accountNumber) {
+      copyBtn.setAttribute("data-acc", data.gift.accountNumber.replace(/\s+/g, ""));
+    }
+
+    const qrImgEl = document.querySelector(".gift-qr-img");
+    if (qrImgEl && data.gift.qrPhoto) qrImgEl.src = data.gift.qrPhoto;
+
+    const giftMsgEl = document.querySelector(".gift-gratitude");
+    if (giftMsgEl && data.gift.message) giftMsgEl.innerText = data.gift.message;
   }
 
   // Cập nhật Nhạc

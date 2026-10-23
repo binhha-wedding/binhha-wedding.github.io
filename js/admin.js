@@ -1,12 +1,17 @@
 /**
- * ADMIN CONTROLLER - THIỆP CƯỚI ONLINE (habinh2026)
- * Quản lý thay đổi toàn bộ thông tin, ảnh, nhạc thiệp cưới
+ * ADMIN CONTROLLER - QUẢN TRỊ THIỆP CƯỚI NGUYỄN HOÀNG THIÊN BÌNH & KIỀU THU HÀ
+ * Hỗ trợ 2 chế độ:
+ *  - 'main': Trang chính (Có STK & Ảnh mới a2b.jpg) -> lưu vào data/main-data.json
+ *  - 'binhha': Trang chú rể (Không STK & Ảnh cũ) -> lưu vào data/binhha-data.json
+ * Mật khẩu đăng nhập: binhha2026
  */
 
-const ADMIN_PASSWORD = "habinh2026";
+const ADMIN_PASSWORD = "binhha2026";
+let currentAdminPage = "main";
 let weddingData = null;
 
 document.addEventListener("DOMContentLoaded", () => {
+  currentAdminPage = document.body?.dataset.adminPage || "main";
   initAuth();
   initTabs();
   loadData();
@@ -23,8 +28,9 @@ function initAuth() {
   const authErr = document.getElementById("auth-error");
   const logoutBtn = document.getElementById("btn-logout");
 
-  // Kiểm tra session hiện tại
-  if (sessionStorage.getItem("admin_auth") === ADMIN_PASSWORD) {
+  const sessionKey = `binhha_admin_auth_${currentAdminPage}`;
+
+  if (sessionStorage.getItem(sessionKey) === ADMIN_PASSWORD) {
     if (overlay) overlay.style.display = "none";
   } else {
     if (overlay) overlay.style.display = "flex";
@@ -35,7 +41,7 @@ function initAuth() {
       e.preventDefault();
       const val = authPass ? authPass.value.trim() : "";
       if (val === ADMIN_PASSWORD) {
-        sessionStorage.setItem("admin_auth", ADMIN_PASSWORD);
+        sessionStorage.setItem(sessionKey, ADMIN_PASSWORD);
         if (overlay) overlay.style.display = "none";
         showToast("Đăng nhập thành công!");
       } else {
@@ -50,7 +56,7 @@ function initAuth() {
 
   if (logoutBtn) {
     logoutBtn.addEventListener("click", () => {
-      sessionStorage.removeItem("admin_auth");
+      sessionStorage.removeItem(sessionKey);
       window.location.reload();
     });
   }
@@ -80,8 +86,11 @@ function initTabs() {
    3. NẠP DỮ LIỆU BAN ĐẦU
    ========================================================================== */
 async function loadData() {
+  const storageKey = currentAdminPage === "main" ? "binhha_admin_main_data" : "binhha_admin_binhha_data";
+  const jsonFile = currentAdminPage === "main" ? "data/main-data.json" : "data/binhha-data.json";
+
   // 1. Kiểm tra localStorage trước
-  const localSaved = localStorage.getItem("admin_wedding_data");
+  const localSaved = localStorage.getItem(storageKey);
   if (localSaved) {
     try {
       weddingData = JSON.parse(localSaved);
@@ -92,310 +101,92 @@ async function loadData() {
     }
   }
 
-  // 2. Nếu chưa có, fetch từ data/wedding-data.json
+  // 2. Fetch từ file JSON cấu hình
   try {
-    const res = await fetch(`data/wedding-data.json?v=${Date.now()}`);
+    const res = await fetch(`${jsonFile}?v=${Date.now()}`);
     if (res.ok) {
       weddingData = await res.json();
       populateForm(weddingData);
-    } else {
-      console.warn("Chưa tải được wedding-data.json, sử dụng dữ liệu mặc định");
     }
   } catch (err) {
-    console.error("Lỗi fetch wedding-data.json:", err);
+    console.error(`Lỗi fetch ${jsonFile}:`, err);
   }
 }
 
 function populateForm(data) {
   if (!data) return;
 
-  // Cô dâu & Nhà gái
-  setVal("bride-name", data.bride?.name);
-  setVal("bride-father", data.bride?.father);
-  setVal("bride-mother", data.bride?.mother);
-  setImgSrc("preview-bride-img", data.bride?.photo);
+  // 1. Thông điệp & Lời tựa
+  setVal("quote-text", data.quote?.text);
+  setVal("quote-author", data.quote?.author);
+  setVal("footer-thanks", data.footer?.thanks || data.footerThanks);
 
-  // Chú rể & Nhà trai
+  // 2. Sự kiện & Thời gian
+  setVal("ceremony-tag", data.ceremony?.tag || "TIỆC MỪNG THÂN MẬT");
+  setVal("ceremony-title", data.ceremony?.title || "TIỆC MỪNG THÂN MẬT");
+  setVal("ceremony-subtitle", data.ceremony?.subtitle || "Được Tổ Chức Tại Nhà Trai");
+  if (data.ceremony?.datetime) {
+    try {
+      const d = new Date(data.ceremony.datetime);
+      const isoLocal = new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+      setVal("ceremony-datetime", isoLocal);
+    } catch (e) {}
+  }
+  setVal("ceremony-lunar", data.ceremony?.lunarDate);
+
+  // 3. Địa điểm & Bản đồ
+  setVal("venue-name", data.ceremony?.venueName || "TƯ GIA NHÀ TRAI");
+  setVal("venue-address", data.ceremony?.venueAddress);
+  setVal("venue-map-url", data.ceremony?.mapUrl);
+  setVal("venue-map-coords", data.ceremony?.mapEmbedCoords);
+
+  // 4. Cặp đôi & Gia đình
   setVal("groom-name", data.groom?.name);
   setVal("groom-father", data.groom?.father);
   setVal("groom-mother", data.groom?.mother);
-  setImgSrc("preview-groom-img", data.groom?.photo);
 
-  // Lời tựa
-  setVal("quote-text", data.quote?.text);
-  setVal("quote-author", data.quote?.author);
+  setVal("bride-name", data.bride?.name);
+  setVal("bride-father", data.bride?.father);
+  setVal("bride-mother", data.bride?.mother);
 
-  // Thời gian & Sự kiện
-  setVal("ceremony-tag", data.ceremony?.tag);
-  setVal("ceremony-title", data.ceremony?.title);
-  setVal("ceremony-subtitle", data.ceremony?.subtitle);
-  setVal("ceremony-datetime", data.ceremony?.datetime?.substring(0, 16));
-  setVal("ceremony-lunar", data.ceremony?.lunarDate);
-  setVal("venue-name", data.ceremony?.venueName);
-  setVal("venue-address", data.ceremony?.venueAddress);
-  setVal("venue-map-url", data.ceremony?.mapUrl);
+  // 5. STK (chỉ trang main)
+  if (currentAdminPage === "main") {
+    setVal("gift-bank-name", data.gift?.bankName || "Techcombank");
+    setVal("gift-account-name", data.gift?.accountName || "NGUYEN HOANG THIEN BINH");
+    setVal("gift-account-number", data.gift?.accountNumber || "6099 1010 10");
+    setVal("gift-qr-photo", data.gift?.qrPhoto || "img/qr-groom.jpg");
+    setVal("gift-message", data.gift?.message);
+  }
 
-  // Ảnh bìa chính (Hero)
-  setImgSrc("preview-hero-img", data.hero?.photo);
-
-  // Nhạc nền
-  setVal("music-url", data.music?.url);
-  setVal("music-title", data.music?.title);
-
-  // Album ảnh
-  renderGalleryManager(data.gallery || []);
-}
-
-function setVal(id, val) {
-  const el = document.getElementById(id);
-  if (el && val !== undefined) el.value = val;
-}
-
-function setImgSrc(id, src) {
-  const el = document.getElementById(id);
-  if (el && src) el.src = src;
+  // 6. Nhạc nền & Ảnh bìa
+  setVal("hero-photo", data.hero?.photo || (currentAdminPage === "main" ? "img/hero-a2b.jpg" : "img/hero-groom.jpg"));
+  setVal("music-title", data.music?.title || "Mối Duyên Vàng");
+  setVal("music-url", data.music?.url || "audio/moi-duyen-vang.mp3");
 }
 
 /* ==========================================================================
-   4. QUẢN LÝ ALBUM ẢNH
-   ========================================================================== */
-function renderGalleryManager(gallery) {
-  const listEl = document.getElementById("gallery-admin-list");
-  if (!listEl) return;
-
-  listEl.innerHTML = gallery.map((item, index) => `
-    <div class="gallery-admin-card" data-index="${index}">
-      <img src="${item.url}" alt="${item.caption || ''}" class="gallery-admin-thumb">
-      <div class="gallery-admin-body">
-        <input type="text" class="gallery-admin-caption" value="${item.caption || ''}" placeholder="Chú thích ảnh..." onchange="updateGalleryCaption(${index}, this.value)">
-        <button type="button" class="btn-remove-photo" onclick="removeGalleryPhoto(${index})">Xóa ảnh</button>
-      </div>
-    </div>
-  `).join("");
-}
-
-window.updateGalleryCaption = function(index, caption) {
-  if (weddingData?.gallery?.[index]) {
-    weddingData.gallery[index].caption = caption;
-  }
-};
-
-window.removeGalleryPhoto = function(index) {
-  if (weddingData?.gallery) {
-    weddingData.gallery.splice(index, 1);
-    renderGalleryManager(weddingData.gallery);
-    showToast("Đã xóa ảnh khỏi danh sách");
-  }
-};
-
-/* ==========================================================================
-   5. XỬ LÝ SỰ KIỆN TẢI ẢNH & NHẠC TỪ MÁY
-   ========================================================================== */
-function setupHandlers() {
-  // Upload ảnh bìa Hero
-  setupSingleImageUpload("hero-photo-input", "preview-hero-img", (dataUrl) => {
-    if (!weddingData.hero) weddingData.hero = {};
-    weddingData.hero.photo = dataUrl;
-  });
-
-  // Upload ảnh chân dung Cô dâu
-  setupSingleImageUpload("bride-photo-input", "preview-bride-img", (dataUrl) => {
-    if (!weddingData.bride) weddingData.bride = {};
-    weddingData.bride.photo = dataUrl;
-  });
-
-  // Upload ảnh chân dung Chú rể
-  setupSingleImageUpload("groom-photo-input", "preview-groom-img", (dataUrl) => {
-    if (!weddingData.groom) weddingData.groom = {};
-    weddingData.groom.photo = dataUrl;
-  });
-
-  // Thêm ảnh mới vào Album
-  const addPhotoInput = document.getElementById("add-photo-file-input");
-  if (addPhotoInput) {
-    addPhotoInput.addEventListener("change", (e) => {
-      const file = e.target.files[0];
-      if (file) {
-        readFileAsDataUrl(file, (dataUrl) => {
-          if (!weddingData.gallery) weddingData.gallery = [];
-          weddingData.gallery.push({
-            url: dataUrl,
-            caption: file.name.replace(/\.[^/.]+$/, "")
-          });
-          renderGalleryManager(weddingData.gallery);
-          showToast("Đã thêm 1 ảnh mới vào Album!");
-        });
-      }
-    });
-  }
-
-  // Thêm ảnh bằng URL
-  const btnAddPhotoUrl = document.getElementById("btn-add-photo-url");
-  if (btnAddPhotoUrl) {
-    btnAddPhotoUrl.addEventListener("click", () => {
-      const url = prompt("Nhập đường dẫn (URL) ảnh của bạn:");
-      if (url) {
-        if (!weddingData.gallery) weddingData.gallery = [];
-        weddingData.gallery.push({
-          url: url.trim(),
-          caption: "Khoảnh khắc kỷ niệm"
-        });
-        renderGalleryManager(weddingData.gallery);
-        showToast("Đã thêm ảnh vào Album!");
-      }
-    });
-  }
-
-  // Tải file MP3 từ máy tính
-  const audioFileInput = document.getElementById("music-file-input");
-  if (audioFileInput) {
-    audioFileInput.addEventListener("change", (e) => {
-      const file = e.target.files[0];
-      if (file) {
-        readFileAsDataUrl(file, (dataUrl) => {
-          weddingData.music = {
-            title: file.name.replace(/\.[^/.]+$/, ""),
-            url: dataUrl
-          };
-          setVal("music-url", dataUrl);
-          setVal("music-title", file.name);
-          showToast("Đã tải bài hát từ máy lên!");
-        });
-      }
-    });
-  }
-
-  // Nghe thử nhạc
-  const btnTestMusic = document.getElementById("btn-test-music");
-  const testAudioEl = document.getElementById("admin-test-audio");
-  if (btnTestMusic && testAudioEl) {
-    let isTesting = false;
-    btnTestMusic.addEventListener("click", () => {
-      const url = document.getElementById("music-url")?.value;
-      if (!url) {
-        alert("Vui lòng chọn hoặc tải file nhạc trước!");
-        return;
-      }
-      if (isTesting) {
-        testAudioEl.pause();
-        btnTestMusic.innerText = "▶ Nghe thử bài hát";
-        isTesting = false;
-      } else {
-        testAudioEl.src = url;
-        testAudioEl.play();
-        btnTestMusic.innerText = "⏸ Dừng phát nhạc";
-        isTesting = true;
-      }
-    });
-  }
-
-  // Chọn nhanh bài hát có sẵn
-  const presetMusicBtns = document.querySelectorAll(".btn-preset-music");
-  presetMusicBtns.forEach(btn => {
-    btn.addEventListener("click", () => {
-      const title = btn.getAttribute("data-title");
-      const url = btn.getAttribute("data-url");
-      setVal("music-title", title);
-      setVal("music-url", url);
-      if (weddingData) {
-        weddingData.music = { title, url };
-      }
-      showToast(`Đã chọn bài: ${title}`);
-    });
-  });
-
-  // Nút Lưu thay đổi (Local preview)
-  const btnSaveLocal = document.getElementById("btn-save-local");
-  if (btnSaveLocal) {
-    btnSaveLocal.addEventListener("click", () => {
-      collectFormData();
-      try {
-        localStorage.setItem("admin_wedding_data", JSON.stringify(weddingData));
-        showToast("Đã lưu dữ liệu vào trình duyệt thành công!");
-      } catch (err) {
-        console.warn("Lỗi lưu localStorage:", err);
-        alert(
-          "⚠️ Dữ liệu quá lớn để lưu tạm vào trình duyệt (do dung lượng bài hát MP3 vượt mức 5MB)!\n\n" +
-          "💡 Giải pháp: Hãy bấm '🚀 Xuất bản lên GitHub' hoặc chọn bài hát có sẵn/link MP3 trực tuyến."
-        );
-      }
-    });
-  }
-
-  // Nút Tải file JSON
-  const btnDownloadJson = document.getElementById("btn-download-json");
-  if (btnDownloadJson) {
-    btnDownloadJson.addEventListener("click", () => {
-      collectFormData();
-      downloadJsonFile(weddingData, "wedding-data.json");
-    });
-  }
-
-  // Nút Đồng bộ lên GitHub
-  const btnSyncGithub = document.getElementById("btn-sync-github");
-  if (btnSyncGithub) {
-    btnSyncGithub.addEventListener("click", handleGitHubSync);
-  }
-}
-
-function setupSingleImageUpload(inputId, previewId, onLoaded) {
-  const input = document.getElementById(inputId);
-  const preview = document.getElementById(previewId);
-  if (input) {
-    input.addEventListener("change", (e) => {
-      const file = e.target.files[0];
-      if (file) {
-        readFileAsDataUrl(file, (dataUrl) => {
-          if (preview) preview.src = dataUrl;
-          if (onLoaded) onLoaded(dataUrl);
-          showToast("Đã cập nhật ảnh!");
-        });
-      }
-    });
-  }
-}
-
-function readFileAsDataUrl(file, callback) {
-  const reader = new FileReader();
-  reader.onload = (e) => callback(e.target.result);
-  reader.readAsDataURL(file);
-}
-
-/* ==========================================================================
-   6. THU THẬP DỮ LIỆU TỪ CÁC Ô NHẬP LIỆU
+   4. THU THẬP DỮ LIỆU TỪ FORM
    ========================================================================== */
 function collectFormData() {
   if (!weddingData) weddingData = {};
 
-  // Cô dâu
-  weddingData.bride = {
-    name: getVal("bride-name") || "Kiều Thu Hà",
-    role: "Cô Dâu",
-    photo: document.getElementById("preview-bride-img")?.src || "img/bride.jpg",
-    father: getVal("bride-father") || "Kiều Hưng",
-    mother: getVal("bride-mother") || "Triệu Thị Chinh"
-  };
-
-  // Chú rể
-  weddingData.groom = {
-    name: getVal("groom-name") || "Nguyễn Hoàng Thiên Bình",
-    role: "Chú Rể",
-    photo: document.getElementById("preview-groom-img")?.src || "img/groom.jpg",
-    father: getVal("groom-father") || "Nguyễn Duy Hiển",
-    mother: getVal("groom-mother") || "Phùng Thiên Hương"
-  };
+  weddingData.pageType = currentAdminPage;
 
   // Lời tựa
   weddingData.quote = {
-    text: getVal("quote-text") || "",
-    author: getVal("quote-author") || ""
+    text: getVal("quote-text") || "Gặp gỡ là duyên phận, nắm tay là định mệnh, và cùng nhau bước vào lễ đường là lời hứa trọn đời. Cảm ơn vì giữa hàng triệu người trên thế giới, ta đã tìm thấy nhau.",
+    author: getVal("quote-author") || "Thiên Bình & Thu Hà"
   };
 
-  // Lễ cưới
+  weddingData.footer = {
+    thanks: getVal("footer-thanks") || "Cảm ơn quý khách đã đến chung vui cùng gia đình chúng tôi! ♡ 27.11.2026"
+  };
+
+  // Thời gian
   const dtVal = getVal("ceremony-datetime");
-  let formattedDt = "2026-11-28T09:00:00+07:00";
-  let dateDisp = "Thứ Bảy, 28 Tháng 11 Năm 2026";
-  let timeDisp = "09:00 · Thứ Bảy, 28/11/2026";
+  let formattedDt = "2026-11-27T17:00:00+07:00";
+  let dateDisp = "Thứ Sáu, 27 Tháng 11 Năm 2026";
+  let timeDisp = "17:00 · Thứ Sáu, 27/11/2026";
 
   if (dtVal) {
     const d = new Date(dtVal);
@@ -411,36 +202,248 @@ function collectFormData() {
   }
 
   weddingData.ceremony = {
-    tag: getVal("ceremony-tag") || "Lễ Vu Quy",
-    title: getVal("ceremony-title") || "LỄ VU QUY",
-    subtitle: getVal("ceremony-subtitle") || "Tiệc Mừng Tổ Chức Tại Nhà Gái",
+    tag: getVal("ceremony-tag") || "TIỆC MỪNG THÂN MẬT",
+    title: getVal("ceremony-title") || "TIỆC MỪNG THÂN MẬT",
+    subtitle: getVal("ceremony-subtitle") || "Được Tổ Chức Tại Nhà Trai",
     datetime: formattedDt,
     dateDisplay: dateDisp,
     timeDisplay: timeDisp,
-    lunarDate: getVal("ceremony-lunar") || "20 tháng 10 năm Bính Ngọ",
-    venueName: getVal("venue-name") || "TƯ GIA NHÀ GÁI",
-    venueAddress: getVal("venue-address") || "Thôn Trung Hưng, xã Hợp Thịnh, thành phố Bắc Ninh",
-    mapUrl: getVal("venue-map-url") || "https://maps.app.goo.gl/4cpB2ekW9P5ouQrS6",
-    mapEmbedCoords: "21.3123181,105.9177815"
+    lunarDate: getVal("ceremony-lunar") || "19 tháng 10 năm Bính Ngọ",
+    venueName: getVal("venue-name") || "TƯ GIA NHÀ TRAI",
+    venueAddress: getVal("venue-address") || "Ngõ 8, đường Lý Thường Kiệt, phường Vĩnh Yên, tỉnh Phú Thọ",
+    mapUrl: getVal("venue-map-url") || "https://maps.google.com/?q=21.309458,105.572574",
+    mapEmbedCoords: getVal("venue-map-coords") || "21.309458,105.572574"
   };
 
-  // Hero
+  // Cặp đôi
+  weddingData.groom = {
+    name: getVal("groom-name") || "Nguyễn Hoàng Thiên Bình",
+    role: "Chú Rể",
+    photo: "img/groom.jpg",
+    father: getVal("groom-father") || "Nguyễn Duy Hiển",
+    mother: getVal("groom-mother") || "Phùng Thiên Hương"
+  };
+
+  weddingData.bride = {
+    name: getVal("bride-name") || "Kiều Thu Hà",
+    role: "Cô Dâu",
+    photo: "img/bride.jpg",
+    father: getVal("bride-father") || "Kiều Hưng",
+    mother: getVal("bride-mother") || "Triệu Thị Chinh"
+  };
+
+  // STK
+  if (currentAdminPage === "main") {
+    weddingData.gift = {
+      enabled: true,
+      bankName: getVal("gift-bank-name") || "Techcombank",
+      accountName: getVal("gift-account-name") || "NGUYEN HOANG THIEN BINH",
+      accountNumber: getVal("gift-account-number") || "6099 1010 10",
+      qrPhoto: getVal("gift-qr-photo") || "img/qr-groom.jpg",
+      message: getVal("gift-message") || "Sự hiện diện hay tình cảm và lời chúc phúc từ phương xa của quý khách đều là niềm vinh hạnh to lớn đối với gia đình chúng tôi!"
+    };
+  } else {
+    weddingData.gift = {
+      enabled: false
+    };
+  }
+
+  // Hero & Music
+  const defaultPhoto = currentAdminPage === "main" ? "img/hero-a2b.jpg" : "img/hero-groom.jpg";
   weddingData.hero = {
-    tag: getVal("ceremony-tag") || "Lễ Vu Quy",
+    tag: getVal("ceremony-tag") || "TIỆC MỪNG THÂN MẬT",
     heading: "Thiệp Mừng Báo Hỷ",
-    photo: document.getElementById("preview-hero-img")?.src || "img/hero-banner.jpg"
+    photo: getVal("hero-photo") || defaultPhoto
   };
 
-  // Music
   weddingData.music = {
-    title: getVal("music-title") || "Beautiful in White - Shane Filan",
-    url: getVal("music-url") || "audio/beautiful-in-white.mp3"
+    title: getVal("music-title") || "Mối Duyên Vàng",
+    url: getVal("music-url") || "audio/moi-duyen-vang.mp3"
   };
 }
 
+/* ==========================================================================
+   5. THIẾT LẬP CÁC SỰ KIỆN NÚT BẤM
+   ========================================================================== */
+function setupHandlers() {
+  const storageKey = currentAdminPage === "main" ? "binhha_admin_main_data" : "binhha_admin_binhha_data";
+  const jsonFilename = currentAdminPage === "main" ? "main-data.json" : "binhha-data.json";
+
+  // Nghe thử nhạc
+  const btnTestMusic = document.getElementById("btn-test-music");
+  const testAudio = document.getElementById("admin-test-audio");
+  if (btnTestMusic && testAudio) {
+    let isPlaying = false;
+    btnTestMusic.addEventListener("click", () => {
+      const url = getVal("music-url");
+      if (!url) {
+        alert("Vui lòng nhập đường dẫn bài hát trước!");
+        return;
+      }
+      if (!isPlaying) {
+        testAudio.src = url;
+        testAudio.play().then(() => {
+          isPlaying = true;
+          btnTestMusic.innerText = "⏹ Dừng nghe thử";
+        }).catch(err => {
+          alert("Không thể phát nhạc từ đường dẫn này: " + err.message);
+        });
+      } else {
+        testAudio.pause();
+        isPlaying = false;
+        btnTestMusic.innerText = "▶ Nghe thử bài hát";
+      }
+    });
+
+    testAudio.addEventListener("ended", () => {
+      isPlaying = false;
+      btnTestMusic.innerText = "▶ Nghe thử bài hát";
+    });
+  }
+
+  // Chọn bài hát mẫu
+  document.querySelectorAll(".btn-preset-music").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const title = btn.getAttribute("data-title");
+      const url = btn.getAttribute("data-url");
+      setVal("music-title", title);
+      setVal("music-url", url);
+      showToast(`Đã chọn bài: ${title}`);
+    });
+  });
+
+  // Nút Lưu xem thử (Local)
+  const btnSaveLocal = document.getElementById("btn-save-local");
+  if (btnSaveLocal) {
+    btnSaveLocal.addEventListener("click", () => {
+      collectFormData();
+      try {
+        localStorage.setItem(storageKey, JSON.stringify(weddingData));
+        showToast("💾 Đã lưu dữ liệu xem thử trên máy thành công!");
+      } catch (err) {
+        alert("Lỗi lưu trữ: " + err.message);
+      }
+    });
+  }
+
+  // Nút Tải file JSON
+  const btnDownloadJson = document.getElementById("btn-download-json");
+  if (btnDownloadJson) {
+    btnDownloadJson.innerText = `Tải file ${jsonFilename}`;
+    btnDownloadJson.addEventListener("click", () => {
+      collectFormData();
+      downloadJsonFile(weddingData, jsonFilename);
+    });
+  }
+
+  // Nút Đồng bộ lên GitHub
+  const btnSyncGithub = document.getElementById("btn-sync-github");
+  if (btnSyncGithub) {
+    btnSyncGithub.addEventListener("click", handleGitHubSync);
+  }
+}
+
+/* ==========================================================================
+   6. ĐỒNG BỘ LÊN GITHUB THÔNG QUA GITHUB API
+   ========================================================================== */
+async function handleGitHubSync() {
+  collectFormData();
+
+  const repo = "binhha-wedding/binhha-wedding.github.io";
+  const jsonPath = currentAdminPage === "main" ? "data/main-data.json" : "data/binhha-data.json";
+
+  const tokenPrompt = prompt(
+    `🚀 XUẤT BẢN LÊN GITHUB PAGES\n\n` +
+    `Dữ liệu sẽ được đẩy trực tiếp vào file '${jsonPath}' trên repo ${repo}.\n\n` +
+    `Vui lòng nhập GitHub Personal Access Token (PAT) có quyền 'repo':`,
+    localStorage.getItem("github_sync_token") || ""
+  );
+
+  if (!tokenPrompt) return;
+  const token = tokenPrompt.trim();
+  localStorage.setItem("github_sync_token", token);
+
+  showToast("Đang kết nối GitHub và xuất bản...", 6000);
+
+  try {
+    // 1. Lấy SHA hiện tại của file
+    let sha = null;
+    const getRes = await fetch(`https://api.github.com/repos/${repo}/contents/${jsonPath}`, {
+      headers: {
+        "Authorization": `token ${token}`,
+        "Accept": "application/vnd.github.v3+json"
+      }
+    });
+
+    if (getRes.ok) {
+      const existing = await getRes.json();
+      sha = existing.sha;
+    }
+
+    // 2. Chuyển đổi dữ liệu sang Base64 Unicode chuẩn
+    const jsonString = JSON.stringify(weddingData, null, 2);
+    const contentBase64 = btoa(unescape(encodeURIComponent(jsonString)));
+
+    // 3. Đẩy file lên GitHub
+    const putRes = await fetch(`https://api.github.com/repos/${repo}/contents/${jsonPath}`, {
+      method: "PUT",
+      headers: {
+        "Authorization": `token ${token}`,
+        "Accept": "application/vnd.github.v3+json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        message: `Admin: Cập nhật cấu hình ${jsonPath} [skip ci]`,
+        content: contentBase64,
+        sha: sha || undefined,
+        branch: "main"
+      })
+    });
+
+    if (putRes.ok) {
+      // Lưu luôn vào local storage
+      const storageKey = currentAdminPage === "main" ? "binhha_admin_main_data" : "binhha_admin_binhha_data";
+      localStorage.setItem(storageKey, JSON.stringify(weddingData));
+
+      alert(
+        `🎉 XUẤT BẢN THÀNH CÔNG!\n\n` +
+        `File ${jsonPath} đã được đẩy lên GitHub thành công.\n` +
+        `Khoảng 1-2 phút nữa GitHub Pages sẽ hoàn tất cập nhật cho toàn bộ khách mời!`
+      );
+      showToast("Xuất bản lên GitHub thành công!");
+    } else {
+      const errData = await putRes.json();
+      alert(`❌ Lỗi xuất bản GitHub (${putRes.status}): ${errData.message || "Không xác định"}`);
+    }
+  } catch (err) {
+    console.error("GitHub Sync Error:", err);
+    alert(`❌ Lỗi kết nối mạng: ${err.message}`);
+  }
+}
+
+/* ==========================================================================
+   7. HÀM TIỆN ÍCH HỖ TRỢ
+   ========================================================================== */
 function getVal(id) {
   const el = document.getElementById(id);
   return el ? el.value.trim() : "";
+}
+
+function setVal(id, val) {
+  const el = document.getElementById(id);
+  if (el && val !== undefined && val !== null) {
+    el.value = val;
+  }
+}
+
+function showToast(msg, duration = 3000) {
+  const toast = document.getElementById("admin-toast");
+  if (!toast) return;
+  toast.innerText = msg;
+  toast.classList.add("visible");
+  setTimeout(() => {
+    toast.classList.remove("visible");
+  }, duration);
 }
 
 function downloadJsonFile(data, filename) {
@@ -455,86 +458,4 @@ function downloadJsonFile(data, filename) {
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
   showToast(`Đã tải file ${filename} về máy!`);
-}
-
-/* ==========================================================================
-   7. ĐỒNG BỘ TRỰC TIẾP LÊN GITHUB VIA GITHUB API
-   ========================================================================== */
-async function handleGitHubSync() {
-  collectFormData();
-
-  // Nhắc nhập token hoặc lấy từ cache
-  let token = localStorage.getItem("github_sync_token");
-  if (!token) {
-    token = prompt(
-      "Để xuất bản trực tiếp lên habinh-wedding.github.io cho tất cả khách mời:\n" +
-      "Vui lòng dán GitHub Personal Access Token (PAT) có quyền 'repo':\n" +
-      "(Token này chỉ lưu trong trình duyệt của bạn)"
-    );
-    if (!token) return;
-    localStorage.setItem("github_sync_token", token.trim());
-  }
-
-  showToast("Đang đồng bộ dữ liệu lên GitHub...");
-
-  const repoOwner = "habinh-wedding";
-  const repoName = "habinh-wedding.github.io";
-  const filePath = "data/wedding-data.json";
-  const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${filePath}`;
-
-  try {
-    // 1. Lấy SHA hiện tại của file trên repo
-    let sha = "";
-    const getRes = await fetch(apiUrl, {
-      headers: {
-        "Authorization": `Bearer ${token}`,
-        "Accept": "application/vnd.github.v3+json"
-      }
-    });
-
-    if (getRes.ok) {
-      const fileData = await getRes.json();
-      sha = fileData.sha;
-    }
-
-    // 2. Mã hóa nội dung sang Base64 Unicode
-    const jsonString = JSON.stringify(weddingData, null, 2);
-    const contentBase64 = btoa(unescape(encodeURIComponent(jsonString)));
-
-    // 3. Gửi request PUT để commit
-    const putRes = await fetch(apiUrl, {
-      method: "PUT",
-      headers: {
-        "Authorization": `Bearer ${token}`,
-        "Accept": "application/vnd.github.v3+json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        message: "Cập nhật thông tin thiệp cưới từ Admin Dashboard",
-        content: contentBase64,
-        sha: sha || undefined
-      })
-    });
-
-    if (putRes.ok) {
-      showToast("🎉 Đã xuất bản lên GitHub thành công! Web sẽ cập nhật sau 1 phút.");
-      alert("Xuất bản thành công! Website habinh-wedding.github.io sẽ tự động hiển thị nội dung mới sau khoảng 1-2 phút.");
-    } else {
-      const errJson = await putRes.json();
-      alert("Lỗi từ GitHub: " + (errJson.message || "Không thể cập nhật"));
-      localStorage.removeItem("github_sync_token");
-    }
-  } catch (err) {
-    alert("Không thể kết nối đến GitHub: " + err.message);
-  }
-}
-
-function showToast(msg) {
-  const toast = document.getElementById("admin-toast");
-  if (!toast) return;
-  toast.innerText = msg;
-  toast.style.display = "block";
-  setTimeout(() => {
-    toast.style.display = "none";
-  }, 4000);
 }

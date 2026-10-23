@@ -1,0 +1,51 @@
+{
+  "pageType": "main",
+  "bride": {
+    "name": "Kiều Thu Hà",
+    "role": "Cô Dâu",
+    "photo": "img/bride.jpg",
+    "father": "Kiều Hưng",
+    "mother": "Triệu Thị Chinh"
+  },
+  "groom": {
+    "name": "Nguyễn Hoàng Thiên Bình",
+    "role": "Chú Rể",
+    "photo": "img/groom.jpg",
+    "father": "Nguyễn Duy Hiển",
+    "mother": "Phùng Thiên Hương"
+  },
+  "ceremony": {
+    "tag": "TIỆC MỪNG THÂN MẬT",
+    "title": "TIỆC MỪNG THÂN MẬT",
+    "subtitle": "Được Tổ Chức Tại Nhà Trai",
+    "datetime": "2026-11-27T17:00:00+07:00",
+    "dateDisplay": "Thứ Sáu, 27 Tháng 11 Năm 2026",
+    "timeDisplay": "17:00 · Thứ Sáu, 27/11/2026",
+    "lunarDate": "19 tháng 10 năm Bính Ngọ",
+    "venueName": "TƯ GIA NHÀ TRAI",
+    "venueAddress": "Ngõ 8, đường Lý Thường Kiệt, phường Vĩnh Yên, tỉnh Phú Thọ",
+    "mapUrl": "https://maps.google.com/?q=21.309458,105.572574",
+    "mapEmbedCoords": "21.309458,105.572574"
+  },
+  "hero": {
+    "tag": "TIỆC MỪNG THÂN MẬT",
+    "heading": "Thiệp Mừng Báo Hỷ",
+    "photo": "img/hero-a2b.jpg"
+  },
+  "quote": {
+    "text": "Gặp gỡ là duyên phận, nắm tay là định mệnh, và cùng nhau bước vào lễ đường là lời hứa trọn đời. Cảm ơn vì giữa hàng triệu người trên thế giới, ta đã tìm thấy nhau.",
+    "author": "Thiên Bình & Thu Hà"
+  },
+  "gift": {
+    "enabled": true,
+    "bankName": "Techcombank",
+    "accountName": "NGUYEN HOANG THIEN BINH",
+    "accountNumber": "6099 1010 10",
+    "qrPhoto": "img/qr-groom.jpg",
+    "message": "Sự hiện diện hay tình cảm và lời chúc phúc từ phương xa của quý khách đều là niềm vinh hạnh to lớn đối với gia đình chúng tôi!"
+  },
+  "music": {
+    "title": "Mối Duyên Vàng",
+    "url": "audio/moi-duyen-vang.mp3"
+  }
+}

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản Trị Thiệp Cưới · Trang Chú Rể (Không STK)</title>
+  
+  <link rel="icon" type="image/jpeg" href="img/hero-groom.jpg">
+  <link rel="apple-touch-icon" href="img/hero-groom.jpg">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="css/admin.css?v=20261023_1930">
+</head>
+<body data-admin-page="binhha">
+
+  <!-- ========================================================================
+       AUTH OVERLAY (BẢO VỆ MẬT KHẨU: binhha2026)
+       ======================================================================== -->
+  <div class="auth-overlay" id="auth-overlay">
+    <div class="auth-card">
+      <div class="auth-icon">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+      </div>
+      <h2 class="auth-title">Quản Trị Trang Chú Rể</h2>
+      <p class="auth-subtitle">Trang mời trực tiếp (https://binhha-wedding.github.io/binhha.html)</p>
+
+      <form id="auth-form">
+        <div class="auth-input-group">
+          <input type="password" id="auth-password" class="auth-input" placeholder="Nhập mật khẩu (binhha2026)..." required autofocus>
+        </div>
+        <p class="auth-error" id="auth-error">Mật khẩu không đúng! Vui lòng thử lại.</p>
+        <button type="submit" class="auth-btn">Mở Khóa Quản Trị</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="admin-toast" id="admin-toast"></div>
+
+  <!-- Hidden Test Audio Element -->
+  <audio id="admin-test-audio" style="display:none"></audio>
+
+  <!-- ========================================================================
+       HEADER
+       ======================================================================== -->
+  <header class="admin-header">
+    <div class="admin-header-inner">
+      <div class="admin-logo">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+        </svg>
+        <span>Admin Trang Chú Rể · Không STK &amp; Ảnh Cũ</span>
+      </div>
+      <div class="admin-actions">
+        <a href="admin.html" class="btn-sm-view" style="background:#e8ede1;color:var(--admin-sage-dark);border:1px solid #cbd5be;">
+          <span>⇄ Sang Admin Trang Chính (index)</span>
+        </a>
+        <a href="binhha.html" target="_blank" class="btn-sm-view">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/>
+          </svg>
+          <span>Xem Trang Live</span>
+        </a>
+        <button type="button" class="btn-logout" id="btn-logout">Đăng xuất</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       TABS NAVIGATION
+       ======================================================================== -->
+  <nav class="admin-tabs-nav">
+    <button type="button" class="admin-tab-btn active" data-tab="tab-messages">💌 1. Thông Điệp &amp; Lời Tựa</button>
+    <button type="button" class="admin-tab-btn" data-tab="tab-ceremony">📅 2. Sự Kiện &amp; Thời Gian</button>
+    <button type="button" class="admin-tab-btn" data-tab="tab-venue">📍 3. Địa Điểm &amp; Bản Đồ</button>
+    <button type="button" class="admin-tab-btn" data-tab="tab-couple">💑 4. Cặp Đôi &amp; Gia Đình</button>
+    <button type="button" class="admin-tab-btn" data-tab="tab-media">🎵 5. Nhạc Nền &amp; Ảnh Bìa</button>
+    <button type="button" class="admin-tab-btn" data-tab="tab-sync">🚀 6. Xuất Bản &amp; Đồng Bộ</button>
+  </nav>
+
+  <!-- ========================================================================
+       MAIN TAB CONTENT PANELS
+       ======================================================================== -->
+  <main class="admin-main">
+    
+    <!-- Ghi chú đặc biệt cho trang binhha -->
+    <div style="background:#eef4e8;border:1px solid #c9d8bd;border-radius:12px;padding:12px 18px;margin-bottom:20px;font-size:0.88rem;color:var(--admin-sage-dark);display:flex;align-items:center;gap:10px;">
+      <span style="font-size:1.2rem;">ℹ️</span>
+      <span><b>Lưu ý:</b> Trang này dành cho khách mời dự tiệc trực tiếp, hệ thống đã <b>loại bỏ hoàn toàn thông tin số tài khoản / chuyển khoản</b> theo đúng yêu cầu của chú rể.</span>
+    </div>
+
+    <!-- TAB 1: THÔNG ĐIỆP & LỜI TỰA -->
+    <section class="tab-panel active" id="tab-messages">
+      <h2 class="panel-title">Thông Điệp Yêu Thương &amp; Lời Tựa</h2>
+      <p class="panel-desc">Tùy chỉnh câu danh ngôn tình yêu, thông điệp gửi gắm tới khách quý và lời cảm ơn ở chân trang.</p>
+
+      <div class="admin-card-inner" style="margin-bottom:20px;">
+        <h3 class="inner-card-title">✨ Lời Tựa Tình Yêu (Quote)</h3>
+        
+        <div class="form-group-admin">
+          <label for="quote-text">Nội dung thông điệp yêu thương</label>
+          <textarea id="quote-text" class="input-admin" rows="4" placeholder="Nhập lời tựa ngọt ngào..."></textarea>
+          <span style="font-size:0.8rem;color:var(--admin-muted);">Hiển thị trang trọng trong khung trích dẫn hoa văn giữa thiệp cưới.</span>
+        </div>
+
+        <div class="form-group-admin">
+          <label for="quote-author">Người ký tặng / Tác giả</label>
+          <input type="text" id="quote-author" class="input-admin" placeholder="Thiên Bình &amp; Thu Hà">
+        </div>
+      </div>
+
+      <div class="admin-card-inner">
+        <h3 class="inner-card-title">💐 Lời Cảm Ơn Cuối Thiệp (Footer)</h3>
+        <div class="form-group-admin">
+          <label for="footer-thanks">Câu cảm ơn chân thành</label>
+          <input type="text" id="footer-thanks" class="input-admin" placeholder="Cảm ơn quý khách đã đến chung vui cùng gia đình chúng tôi! ♡ 27.11.2026">
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: SỰ KIỆN & THỜI GIAN -->
+    <section class="tab-panel" id="tab-ceremony">
+      <h2 class="panel-title">Thời Gian Tổ Chức &amp; Đồng Hồ Đếm Ngược</h2>
+      <p class="panel-desc">Cấu hình thời gian hôn lễ, ngày âm lịch và tiêu đề sự kiện.</p>
+
+      <div class="admin-card-inner">
+        <div class="form-grid-2">
+          <div class="form-group-admin">
+            <label for="ceremony-tag">Thẻ nhãn sự kiện</label>
+            <input type="text" id="ceremony-tag" class="input-admin" placeholder="TIỆC MỪNG THÂN MẬT">
+          </div>
+          <div class="form-group-admin">
+            <label for="ceremony-title">Tiêu đề hôn lễ</label>
+            <input type="text" id="ceremony-title" class="input-admin" placeholder="TIỆC MỪNG THÂN MẬT">
+          </div>
+        </div>
+
+        <div class="form-group-admin">
+          <label for="ceremony-subtitle">Dòng phụ đề bổ sung</label>
+          <input type="text" id="ceremony-subtitle" class="input-admin" placeholder="Được Tổ Chức Tại Nhà Trai">
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group-admin">
+            <label for="ceremony-datetime">Thời gian chính xác (để chạy đồng hồ đếm ngược)</label>
+            <input type="datetime-local" id="ceremony-datetime" class="input-admin">
+          </div>
+          <div class="form-group-admin">
+            <label for="ceremony-lunar">Ngày Âm Lịch (hiển thị)</label>
+            <input type="text" id="ceremony-lunar" class="input-admin" placeholder="19 tháng 10 năm Bính Ngọ">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: ĐỊA ĐIỂM & BẢN ĐỒ -->
+    <section class="tab-panel" id="tab-venue">
+      <h2 class="panel-title">Địa Điểm Tổ Chức &amp; Bản Đồ Google Maps</h2>
+      <p class="panel-desc">Địa chỉ nơi đón tiếp khách mời và liên kết chỉ đường thông minh.</p>
+
+      <div class="admin-card-inner">
+        <div class="form-group-admin">
+          <label for="venue-name">Tên địa điểm / Tư gia</label>
+          <input type="text" id="venue-name" class="input-admin" placeholder="TƯ GIA NHÀ TRAI">
+        </div>
+
+        <div class="form-group-admin">
+          <label for="venue-address">Địa chỉ chi tiết</label>
+          <input type="text" id="venue-address" class="input-admin" placeholder="Ngõ 8, đường Lý Thường Kiệt, phường Vĩnh Yên, tỉnh Phú Thọ">
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group-admin">
+            <label for="venue-map-url">Link chỉ đường Google Maps</label>
+            <input type="text" id="venue-map-url" class="input-admin" placeholder="https://maps.google.com/?q=21.309458,105.572574">
+          </div>
+          <div class="form-group-admin">
+            <label for="venue-map-coords">Tọa độ GPS nhúng bản đồ</label>
+            <input type="text" id="venue-map-coords" class="input-admin" placeholder="21.309458,105.572574">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: CẶP ĐÔI & GIA ĐÌNH -->
+    <section class="tab-panel" id="tab-couple">
+      <h2 class="panel-title">Thông Tin Chú Rể, Cô Dâu &amp; Phụ Mẫu</h2>
+      <p class="panel-desc">Tùy chỉnh họ tên và thông tin gia đình hai bên.</p>
+
+      <div class="form-grid-2">
+        <!-- CHÚ RỂ -->
+        <div class="admin-card-inner">
+          <h3 class="inner-card-title">🎩 Chú Rể &amp; Nhà Trai</h3>
+          
+          <div class="form-group-admin">
+            <label for="groom-name">Họ và tên Chú Rể</label>
+            <input type="text" id="groom-name" class="input-admin" placeholder="Nguyễn Hoàng Thiên Bình">
+          </div>
+          <div class="form-group-admin">
+            <label for="groom-father">Thân phụ (Bố)</label>
+            <input type="text" id="groom-father" class="input-admin" placeholder="Nguyễn Duy Hiển">
+          </div>
+          <div class="form-group-admin">
+            <label for="groom-mother">Thân mẫu (Mẹ)</label>
+            <input type="text" id="groom-mother" class="input-admin" placeholder="Phùng Thiên Hương">
+          </div>
+        </div>
+
+        <!-- CÔ DÂU -->
+        <div class="admin-card-inner">
+          <h3 class="inner-card-title">🌸 Cô Dâu &amp; Nhà Gái</h3>
+          
+          <div class="form-group-admin">
+            <label for="bride-name">Họ và tên Cô Dâu</label>
+            <input type="text" id="bride-name" class="input-admin" placeholder="Kiều Thu Hà">
+          </div>
+          <div class="form-group-admin">
+            <label for="bride-father">Thân phụ (Bố)</label>
+            <input type="text" id="bride-father" class="input-admin" placeholder="Kiều Hưng">
+          </div>
+          <div class="form-group-admin">
+            <label for="bride-mother">Thân mẫu (Mẹ)</label>
+            <input type="text" id="bride-mother" class="input-admin" placeholder="Triệu Thị Chinh">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: NHẠC NỀN & ẢNH BÌA -->
+    <section class="tab-panel" id="tab-media">
+      <h2 class="panel-title">Nhạc Nền &amp; Ảnh Bìa Hero Banner</h2>
+      <p class="panel-desc">Tùy biến bài hát phát nền và hình ảnh đại diện của trang web.</p>
+
+      <div class="admin-card-inner" style="margin-bottom:20px;">
+        <h3 class="inner-card-title">📸 Ảnh Bìa Toàn Màn Hình (Hero Banner)</h3>
+        <div class="form-group-admin">
+          <label for="hero-photo">Đường dẫn ảnh bìa</label>
+          <input type="text" id="hero-photo" class="input-admin" placeholder="img/hero-groom.jpg">
+          <span style="font-size:0.8rem;color:var(--admin-muted);">Trang chú rể mặc định dùng: <code>img/hero-groom.jpg</code> (ảnh truyền thống).</span>
+        </div>
+      </div>
+
+      <div class="admin-card-inner">
+        <h3 class="inner-card-title">🎵 Nhạc Nền Thiệp Cưới</h3>
+
+        <div class="form-group-admin">
+          <label for="music-title">Tên bài hát hiển thị</label>
+          <input type="text" id="music-title" class="input-admin" placeholder="Mối Duyên Vàng">
+        </div>
+
+        <div class="form-group-admin">
+          <label for="music-url">Đường dẫn file MP3</label>
+          <input type="text" id="music-url" class="input-admin" placeholder="audio/moi-duyen-vang.mp3">
+        </div>
+
+        <div style="display:flex;gap:12px;margin-top:16px;flex-wrap:wrap;">
+          <button type="button" class="btn-upload" id="btn-test-music">▶ Nghe thử bài hát</button>
+        </div>
+
+        <div style="margin-top:18px;padding-top:14px;border-top:1px dashed #e2e8f0;">
+          <label style="font-size:0.85rem;font-weight:600;color:var(--admin-text);margin-bottom:8px;display:block;">✨ Chọn nhanh bài hát có sẵn:</label>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button type="button" class="btn-preset-music" data-title="Mối Duyên Vàng" data-url="audio/moi-duyen-vang.mp3" style="padding:6px 14px;border:1px solid #cbd5e1;border-radius:20px;background:#f8fafc;font-size:0.85rem;cursor:pointer;">🎵 Mối Duyên Vàng</button>
+            <button type="button" class="btn-preset-music" data-title="Beautiful in White" data-url="audio/beautiful-in-white.mp3" style="padding:6px 14px;border:1px solid #cbd5e1;border-radius:20px;background:#f8fafc;font-size:0.85rem;cursor:pointer;">🎵 Beautiful in White</button>
+            <button type="button" class="btn-preset-music" data-title="Nhạc Đám Cưới Hòa Tấu" data-url="audio/wedding-music.mp3" style="padding:6px 14px;border:1px solid #cbd5e1;border-radius:20px;background:#f8fafc;font-size:0.85rem;cursor:pointer;">🎵 Nhạc Hòa Tấu</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 6: XUẤT BẢN & ĐỒNG BỘ -->
+    <section class="tab-panel" id="tab-sync">
+      <h2 class="panel-title">Xuất Bản &amp; Đồng Bộ Lên Mạng</h2>
+      <p class="panel-desc">Cách thức áp dụng thông tin mới cho toàn bộ khách mời trên mọi thiết bị.</p>
+
+      <div class="admin-card-inner" style="margin-bottom:20px;">
+        <h3 class="inner-card-title">💡 3 Cách Lưu Dữ Liệu</h3>
+        
+        <div style="display:flex;flex-direction:column;gap:14px;font-size:0.92rem;">
+          <div style="padding:14px;background:#ffffff;border-radius:10px;border:1px solid var(--admin-border);">
+            <b>1. Lưu &amp; Xem thử ngay (Local):</b>
+            <p style="color:var(--admin-muted);margin-top:4px;">Lưu tức thì vào trình duyệt máy này. Bạn có thể mở ngay trang thiệp để xem kết quả trước.</p>
+          </div>
+
+          <div style="padding:14px;background:#ffffff;border-radius:10px;border:1px solid var(--admin-border);">
+            <b>2. Xuất bản trực tiếp lên GitHub Pages (1-Click):</b>
+            <p style="color:var(--admin-muted);margin-top:4px;">Nhập mã GitHub Personal Access Token (PAT) để hệ thống tự động đẩy file cấu hình <code>data/binhha-data.json</code> lên repository <code>binhha-wedding/binhha-wedding.github.io</code>. Sau 1 phút, tất cả khách mời vào xem đều thấy thông tin mới nhất!</p>
+          </div>
+
+          <div style="padding:14px;background:#ffffff;border-radius:10px;border:1px solid var(--admin-border);">
+            <b>3. Tải file JSON về máy:</b>
+            <p style="color:var(--admin-muted);margin-top:4px;">Tải file <code>binhha-data.json</code> về máy để lưu trữ hoặc commit lên Git thủ công bất cứ lúc nào.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================================
+       STICKY BOTTOM ACTION BAR
+       ======================================================================== -->
+  <footer class="admin-sticky-bar">
+    <div class="admin-sticky-inner">
+      <div style="font-size:0.85rem;color:var(--admin-muted);">
+        Chỉnh sửa xong, bấm nút bên phải để lưu hoặc xuất bản.
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <button type="button" class="btn-download-json" id="btn-download-json">Tải file binhha-data.json</button>
+        <button type="button" class="btn-save-main" id="btn-save-local">💾 Lưu &amp; Xem thử</button>
+        <button type="button" class="btn-sync-github" id="btn-sync-github">🚀 Xuất bản lên GitHub</button>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/admin.js?v=20261023_1930"></script>
+</body>
+</html>
