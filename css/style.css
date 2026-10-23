@@ -511,9 +511,9 @@ body.has-floral-effects .wish-card::after {
   height: 100%;
   object-fit: cover;
   object-position: center 20%;
-  transform: scale(1.02);
-  transform-origin: center 20%;
-  transition: transform 8s ease-out;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: auto;
+  transform: none;
 }
 
 .hero-gradient-overlay {
@@ -1600,6 +1600,8 @@ body.page-main-landing .hero-top-block {
     height: 100%;
     object-fit: cover;
     object-position: center top;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: auto;
     transform: none;
     transition: none;
   }

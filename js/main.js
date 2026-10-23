@@ -495,20 +495,23 @@ async function initDynamicData() {
   const jsonPath = isBinhHaPage ? `data/binhha-data.json?v=${Date.now()}` : `data/main-data.json?v=${Date.now()}`;
 
   let data = null;
-  const localSaved = localStorage.getItem(storageKey);
-  if (localSaved) {
-    try {
-      data = JSON.parse(localSaved);
-    } catch (e) {}
-  }
 
+  // Luôn nạp dữ liệu chuẩn mới nhất từ máy chủ (đảm bảo ảnh siêu nét Display P3)
+  try {
+    const res = await fetch(jsonPath);
+    if (res.ok) {
+      data = await res.json();
+    }
+  } catch (e) {}
+
+  // Fallback sang localStorage nếu không có mạng
   if (!data) {
-    try {
-      const res = await fetch(jsonPath);
-      if (res.ok) {
-        data = await res.json();
-      }
-    } catch (e) {}
+    const localSaved = localStorage.getItem(storageKey);
+    if (localSaved) {
+      try {
+        data = JSON.parse(localSaved);
+      } catch (e) {}
+    }
   }
 
   if (!data) return;
@@ -550,11 +553,17 @@ async function initDynamicData() {
 
   // Cập nhật Ảnh Hero nếu admin đổi
   if (data.hero && data.hero.photo) {
+    let heroPhoto = data.hero.photo;
+    // Tự động nâng cấp sang ảnh gốc siêu nét Display P3 nếu phát hiện base64 cũ
+    if (heroPhoto.startsWith("data:image")) {
+      heroPhoto = isBinhHaPage ? "img/a1b.jpg" : "img/hero-a2b.jpg";
+    }
+
     const heroImgEl = document.querySelector("#hero-banner-img");
-    if (heroImgEl) heroImgEl.src = data.hero.photo;
+    if (heroImgEl) heroImgEl.src = heroPhoto;
     const heroSecEl = document.querySelector(".hero-section");
     if (heroSecEl) {
-      heroSecEl.style.backgroundImage = `url('${data.hero.photo}')`;
+      heroSecEl.style.backgroundImage = `url('${heroPhoto}')`;
     }
   }
 

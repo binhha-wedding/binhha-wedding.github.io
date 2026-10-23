@@ -408,7 +408,7 @@ function setupSingleImageUpload(inputId, previewId, onLoaded) {
   }
 }
 
-function readFileAsDataUrl(file, callback, maxWidth = 1920, maxHeight = 1920) {
+function readFileAsDataUrl(file, callback, maxWidth = 2560, maxHeight = 3600) {
   if (!file.type.startsWith("image/")) {
     const reader = new FileReader();
     reader.onload = (e) => callback(e.target.result);
@@ -434,9 +434,18 @@ function readFileAsDataUrl(file, callback, maxWidth = 1920, maxHeight = 1920) {
       const canvas = document.createElement("canvas");
       canvas.width = width;
       canvas.height = height;
-      const ctx = canvas.getContext("2d");
-      ctx.drawImage(img, 0, 0, width, height);
-      const dataUrl = canvas.toDataURL("image/jpeg", 0.88);
+      let ctx;
+      try {
+        ctx = canvas.getContext("2d", { colorSpace: "display-p3" });
+      } catch (err) {
+        ctx = canvas.getContext("2d");
+      }
+      if (ctx) {
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = "high";
+        ctx.drawImage(img, 0, 0, width, height);
+      }
+      const dataUrl = canvas.toDataURL("image/jpeg", 0.94);
       callback(dataUrl);
     };
     img.onerror = () => callback(e.target.result);
