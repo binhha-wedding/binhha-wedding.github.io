@@ -39,13 +39,5 @@
   "music": {
     "title": "Mối Duyên Vàng",
     "url": "audio/moi-duyen-vang.mp3"
-  },
-  "gift": {
-    "groom": {
-      "name": "NGUYEN HOANG THIEN BINH",
-      "bank": "Techcombank",
-      "account": "6099 1010 10",
-      "qr": "img/qr-groom.jpg"
-    }
   }
 }
