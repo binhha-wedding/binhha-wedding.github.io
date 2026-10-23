@@ -246,9 +246,6 @@ function initLightbox() {
   const prevBtn = document.getElementById("lightbox-prev");
   const nextBtn = document.getElementById("lightbox-next");
   const items = document.querySelectorAll(".gallery-item img");
-  const heroFrame = document.getElementById("hero-photo-frame");
-  const heroZoomBtn = document.getElementById("btn-hero-zoom");
-  const heroImg = document.getElementById("hero-banner-img");
 
   if (!modal || !imgEl) return;
 
@@ -284,21 +281,7 @@ function initLightbox() {
     });
   });
 
-  // Hỗ trợ mở xem ảnh cưới Hero banner Full Size
-  function openHeroFullSize() {
-    const src = heroImg ? (heroImg.currentSrc || heroImg.src) : "img/hero-groom.jpg";
-    showSingleImage(src);
-  }
 
-  if (heroFrame) {
-    heroFrame.addEventListener("click", openHeroFullSize);
-  }
-  if (heroZoomBtn) {
-    heroZoomBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      openHeroFullSize();
-    });
-  }
 
   if (closeBtn) closeBtn.addEventListener("click", closeModal);
   if (prevBtn) prevBtn.addEventListener("click", (e) => { e.stopPropagation(); showImage(currentIndex - 1); });
