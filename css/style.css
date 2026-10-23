@@ -439,7 +439,7 @@ button {
   text-align: center;
   overflow: hidden;
   padding: 0;
-  background: #1a2216 url('../img/hero-banner.jpg') center top / cover no-repeat;
+  background: #3e4d3a;
 }
 
 .hero-bg-media {
@@ -467,12 +467,12 @@ button {
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(14, 20, 10, 0.72) 0%,
-    rgba(14, 20, 10, 0.38) 22%,
-    rgba(14, 20, 10, 0.08) 38%,
-    rgba(14, 20, 10, 0.08) 58%,
-    rgba(14, 20, 10, 0.52) 76%,
-    rgba(14, 20, 10, 0.88) 100%
+    rgba(0, 0, 0, 0.22) 0%,
+    rgba(0, 0, 0, 0.04) 18%,
+    rgba(0, 0, 0, 0) 32%,
+    rgba(0, 0, 0, 0) 68%,
+    rgba(0, 0, 0, 0.08) 84%,
+    rgba(0, 0, 0, 0.28) 100%
   );
   z-index: 1;
   pointer-events: none;
@@ -490,7 +490,7 @@ button {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: calc(env(safe-area-inset-top, 0px) + 72px) 20px calc(env(safe-area-inset-bottom, 0px) + 32px);
+  padding: calc(env(safe-area-inset-top, 0px) + 84px) 20px calc(env(safe-area-inset-bottom, 0px) + 32px);
   box-sizing: border-box;
 }
 
@@ -1552,7 +1552,7 @@ button {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center 15%;
+    object-position: center 8%;
     transform: none;
     transition: none;
   }
@@ -1560,22 +1560,26 @@ button {
   .hero-gradient-overlay {
     background: linear-gradient(
       180deg,
-      rgba(14, 20, 10, 0.65) 0%,
-      rgba(14, 20, 10, 0.2) 18%,
-      rgba(14, 20, 10, 0.0) 36%,
-      rgba(14, 20, 10, 0.0) 62%,
-      rgba(14, 20, 10, 0.35) 82%,
-      rgba(14, 20, 10, 0.82) 100%
+      rgba(0, 0, 0, 0.22) 0%,
+      rgba(0, 0, 0, 0.05) 18%,
+      rgba(0, 0, 0, 0) 32%,
+      rgba(0, 0, 0, 0) 68%,
+      rgba(0, 0, 0, 0.08) 84%,
+      rgba(0, 0, 0, 0.26) 100%
     );
   }
 
   .hero-content {
-    padding: calc(env(safe-area-inset-top, 0px) + 54px) 16px calc(env(safe-area-inset-bottom, 0px) + 18px);
+    padding: calc(env(safe-area-inset-top, 0px) + 82px) 16px calc(env(safe-area-inset-bottom, 0px) + 20px);
+  }
+
+  .hero-top-block {
+    margin-top: 8px;
   }
 
   .hero-face-clearance {
     flex: 1;
-    min-height: 140px;
+    min-height: 130px;
   }
 
   .hero-ceremony-tag {
