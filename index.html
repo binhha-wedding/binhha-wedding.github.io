@@ -27,9 +27,26 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Ephesis&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="css/style.css?v=20261023_2245">
+  <link rel="stylesheet" href="css/style.css?v=20261023_2320">
+  <style>
+    /* Riêng trang chính https://binhha-wedding.github.io/ (index.html):
+       Dịch cụm tiêu đề và tên cặp đôi lên trên để thoáng khoảng trống, không bị dính chữ vào đầu chú rể */
+    .hero-top-block {
+      margin-top: 8px !important;
+    }
+    @media (max-width: 768px) {
+      .hero-top-block {
+        margin-top: 10px !important;
+      }
+    }
+    @media (max-width: 480px) {
+      .hero-top-block {
+        margin-top: 8px !important;
+      }
+    }
+  </style>
 </head>
-<body data-page="groom">
+<body data-page="groom" class="page-main-landing">
 
   <!-- Background Audio (Mối Duyên Vàng) -->
   <audio id="bg-music" loop preload="auto">

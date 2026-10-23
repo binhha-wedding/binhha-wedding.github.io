@@ -544,6 +544,10 @@ body.has-floral-effects .wish-card::after {
   margin-top: 24px;
 }
 
+body.page-main-landing .hero-top-block {
+  margin-top: 8px;
+}
+
 .hero-face-clearance {
   flex: 1;
   min-height: 110px;
@@ -1610,6 +1614,10 @@ body.has-floral-effects .wish-card::after {
 
   .hero-top-block {
     margin-top: 45px;
+  }
+
+  body.page-main-landing .hero-top-block {
+    margin-top: 10px;
   }
 
   .hero-face-clearance {
