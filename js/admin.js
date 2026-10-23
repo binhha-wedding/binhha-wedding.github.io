@@ -175,10 +175,14 @@ function populateForm(data) {
   setVal("groom-name", data.groom?.name);
   setVal("groom-father", data.groom?.father);
   setVal("groom-mother", data.groom?.mother);
+  setVal("groom-photo", data.groom?.photo || "img/groom.jpg");
+  setImgSrc("preview-groom-img", data.groom?.photo || "img/groom.jpg");
 
   setVal("bride-name", data.bride?.name);
   setVal("bride-father", data.bride?.father);
   setVal("bride-mother", data.bride?.mother);
+  setVal("bride-photo", data.bride?.photo || "img/bride.jpg");
+  setImgSrc("preview-bride-img", data.bride?.photo || "img/bride.jpg");
 
   // 5. STK (chỉ trang main)
   if (currentAdminPage === "main") {
@@ -186,13 +190,21 @@ function populateForm(data) {
     setVal("gift-account-name", data.gift?.accountName || "NGUYEN HOANG THIEN BINH");
     setVal("gift-account-number", data.gift?.accountNumber || "6099 1010 10");
     setVal("gift-qr-photo", data.gift?.qrPhoto || "img/qr-groom.jpg");
+    setImgSrc("preview-qr-img", data.gift?.qrPhoto || "img/qr-groom.jpg");
     setVal("gift-message", data.gift?.message);
   }
 
   // 6. Nhạc nền & Ảnh bìa
-  setVal("hero-photo", data.hero?.photo || (currentAdminPage === "main" ? "img/hero-a2b.jpg" : "img/hero-groom.jpg"));
+  const defaultPhoto = "img/a1b.jpg";
+  const heroPhotoSrc = data.hero?.photo || defaultPhoto;
+  setVal("hero-photo", heroPhotoSrc);
+  setImgSrc("preview-hero-img", heroPhotoSrc);
+
   setVal("music-title", data.music?.title || "Mối Duyên Vàng");
   setVal("music-url", data.music?.url || "audio/moi-duyen-vang.mp3");
+
+  // 7. Album ảnh
+  renderGalleryManager(data.gallery || []);
 }
 
 /* ==========================================================================
@@ -247,30 +259,33 @@ function collectFormData() {
   };
 
   // Cặp đôi
+  const groomPhoto = document.getElementById("preview-groom-img")?.src || getVal("groom-photo") || "img/groom.jpg";
   weddingData.groom = {
     name: getVal("groom-name") || "Nguyễn Hoàng Thiên Bình",
     role: "Chú Rể",
-    photo: "img/groom.jpg",
+    photo: groomPhoto,
     father: getVal("groom-father") || "Nguyễn Duy Hiển",
     mother: getVal("groom-mother") || "Phùng Thiên Hương"
   };
 
+  const bridePhoto = document.getElementById("preview-bride-img")?.src || getVal("bride-photo") || "img/bride.jpg";
   weddingData.bride = {
     name: getVal("bride-name") || "Kiều Thu Hà",
     role: "Cô Dâu",
-    photo: "img/bride.jpg",
+    photo: bridePhoto,
     father: getVal("bride-father") || "Kiều Hưng",
     mother: getVal("bride-mother") || "Triệu Thị Chinh"
   };
 
   // STK
   if (currentAdminPage === "main") {
+    const qrPhoto = document.getElementById("preview-qr-img")?.src || getVal("gift-qr-photo") || "img/qr-groom.jpg";
     weddingData.gift = {
       enabled: true,
       bankName: getVal("gift-bank-name") || "Techcombank",
       accountName: getVal("gift-account-name") || "NGUYEN HOANG THIEN BINH",
       accountNumber: getVal("gift-account-number") || "6099 1010 10",
-      qrPhoto: getVal("gift-qr-photo") || "img/qr-groom.jpg",
+      qrPhoto: qrPhoto,
       message: getVal("gift-message") || "Sự hiện diện hay tình cảm và lời chúc phúc từ phương xa của quý khách đều là niềm vinh hạnh to lớn đối với gia đình chúng tôi!"
     };
   } else {
@@ -280,17 +295,22 @@ function collectFormData() {
   }
 
   // Hero & Music
-  const defaultPhoto = currentAdminPage === "main" ? "img/hero-a2b.jpg" : "img/hero-groom.jpg";
+  const defaultPhoto = "img/a1b.jpg";
+  const heroPhoto = document.getElementById("preview-hero-img")?.src || getVal("hero-photo") || defaultPhoto;
   weddingData.hero = {
     tag: getVal("ceremony-tag") || "LỄ THÀNH HÔN",
     heading: "Thiệp Mừng Báo Hỷ",
-    photo: getVal("hero-photo") || defaultPhoto
+    photo: heroPhoto
   };
 
   weddingData.music = {
     title: getVal("music-title") || "Mối Duyên Vàng",
     url: getVal("music-url") || "audio/moi-duyen-vang.mp3"
   };
+
+  if (!weddingData.gallery) {
+    weddingData.gallery = [];
+  }
 }
 
 /* ==========================================================================
@@ -332,11 +352,215 @@ function setupTokenControl() {
 }
 
 /* ==========================================================================
+   QUẢN LÝ ALBUM ẢNH & UPLOAD FILE TỪ MÁY TÍNH
+   ========================================================================== */
+function renderGalleryManager(gallery) {
+  const listEl = document.getElementById("gallery-admin-list");
+  if (!listEl) return;
+
+  listEl.innerHTML = (gallery || []).map((item, index) => `
+    <div class="gallery-admin-card" data-index="${index}">
+      <img src="${item.url}" alt="${item.caption || ''}" class="gallery-admin-thumb">
+      <div class="gallery-admin-body">
+        <input type="text" class="gallery-admin-caption" value="${item.caption || ''}" placeholder="Chú thích ảnh..." onchange="updateGalleryCaption(${index}, this.value)">
+        <button type="button" class="btn-remove-photo" onclick="removeGalleryPhoto(${index})">Xóa ảnh</button>
+      </div>
+    </div>
+  `).join("");
+}
+
+window.updateGalleryCaption = function(index, caption) {
+  if (weddingData?.gallery?.[index]) {
+    weddingData.gallery[index].caption = caption;
+  }
+};
+
+window.removeGalleryPhoto = function(index) {
+  if (weddingData?.gallery) {
+    weddingData.gallery.splice(index, 1);
+    renderGalleryManager(weddingData.gallery);
+    showToast("Đã xóa ảnh khỏi danh sách");
+  }
+};
+
+function setupSingleImageUpload(inputId, previewId, onLoaded) {
+  const input = document.getElementById(inputId);
+  const preview = document.getElementById(previewId);
+  if (input) {
+    input.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        readFileAsDataUrl(file, (dataUrl) => {
+          if (preview) preview.src = dataUrl;
+          if (onLoaded) onLoaded(dataUrl);
+          showToast("Đã tải ảnh từ máy tính!");
+        });
+        e.target.value = "";
+      }
+    });
+  }
+}
+
+function readFileAsDataUrl(file, callback, maxWidth = 1920, maxHeight = 1920) {
+  if (!file.type.startsWith("image/")) {
+    const reader = new FileReader();
+    reader.onload = (e) => callback(e.target.result);
+    reader.readAsDataURL(file);
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const img = new Image();
+    img.onload = () => {
+      let width = img.width;
+      let height = img.height;
+      if (width > maxWidth || height > maxHeight) {
+        if (width / height > maxWidth / maxHeight) {
+          height = Math.round((height * maxWidth) / width);
+          width = maxWidth;
+        } else {
+          width = Math.round((width * maxHeight) / height);
+          height = maxHeight;
+        }
+      }
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0, width, height);
+      const dataUrl = canvas.toDataURL("image/jpeg", 0.88);
+      callback(dataUrl);
+    };
+    img.onerror = () => callback(e.target.result);
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function setImgSrc(id, src) {
+  const el = document.getElementById(id);
+  if (el && src) el.src = src;
+}
+
+/* ==========================================================================
    6. THIẾT LẬP CÁC SỰ KIỆN NÚT BẤM
    ========================================================================== */
 function setupHandlers() {
   const storageKey = currentAdminPage === "main" ? "binhha_admin_main_data" : "binhha_admin_binhha_data";
   const jsonFilename = currentAdminPage === "main" ? "main-data.json" : "binhha-data.json";
+
+  // 1. Upload ảnh bìa Hero
+  setupSingleImageUpload("hero-photo-input", "preview-hero-img", (dataUrl) => {
+    setVal("hero-photo", dataUrl);
+    if (!weddingData.hero) weddingData.hero = {};
+    weddingData.hero.photo = dataUrl;
+  });
+
+  const heroPhotoInputText = document.getElementById("hero-photo");
+  if (heroPhotoInputText) {
+    heroPhotoInputText.addEventListener("input", (e) => {
+      setImgSrc("preview-hero-img", e.target.value.trim());
+    });
+  }
+
+  // 2. Upload ảnh chân dung Chú Rể
+  setupSingleImageUpload("groom-photo-input", "preview-groom-img", (dataUrl) => {
+    setVal("groom-photo", dataUrl);
+    if (!weddingData.groom) weddingData.groom = {};
+    weddingData.groom.photo = dataUrl;
+  });
+
+  const groomPhotoInputText = document.getElementById("groom-photo");
+  if (groomPhotoInputText) {
+    groomPhotoInputText.addEventListener("input", (e) => {
+      setImgSrc("preview-groom-img", e.target.value.trim());
+    });
+  }
+
+  // 3. Upload ảnh chân dung Cô Dâu
+  setupSingleImageUpload("bride-photo-input", "preview-bride-img", (dataUrl) => {
+    setVal("bride-photo", dataUrl);
+    if (!weddingData.bride) weddingData.bride = {};
+    weddingData.bride.photo = dataUrl;
+  });
+
+  const bridePhotoInputText = document.getElementById("bride-photo");
+  if (bridePhotoInputText) {
+    bridePhotoInputText.addEventListener("input", (e) => {
+      setImgSrc("preview-bride-img", e.target.value.trim());
+    });
+  }
+
+  // 4. Upload ảnh QR Code (nếu có)
+  setupSingleImageUpload("gift-qr-input", "preview-qr-img", (dataUrl) => {
+    setVal("gift-qr-photo", dataUrl);
+    if (!weddingData.gift) weddingData.gift = {};
+    weddingData.gift.qrPhoto = dataUrl;
+  });
+
+  const giftQrInputText = document.getElementById("gift-qr-photo");
+  if (giftQrInputText) {
+    giftQrInputText.addEventListener("input", (e) => {
+      setImgSrc("preview-qr-img", e.target.value.trim());
+    });
+  }
+
+  // 5. Thêm ảnh vào Album từ máy tính
+  const addPhotoInput = document.getElementById("add-photo-file-input");
+  if (addPhotoInput) {
+    addPhotoInput.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        readFileAsDataUrl(file, (dataUrl) => {
+          if (!weddingData.gallery) weddingData.gallery = [];
+          weddingData.gallery.push({
+            url: dataUrl,
+            caption: file.name.replace(/\.[^/.]+$/, "")
+          });
+          renderGalleryManager(weddingData.gallery);
+          showToast("Đã thêm 1 ảnh mới vào Album!");
+        });
+        e.target.value = "";
+      }
+    });
+  }
+
+  // 6. Thêm ảnh vào Album bằng link/URL
+  const btnAddPhotoUrl = document.getElementById("btn-add-photo-url");
+  if (btnAddPhotoUrl) {
+    btnAddPhotoUrl.addEventListener("click", () => {
+      const url = prompt("Nhập đường dẫn (URL) ảnh của bạn:");
+      if (url && url.trim()) {
+        if (!weddingData.gallery) weddingData.gallery = [];
+        weddingData.gallery.push({
+          url: url.trim(),
+          caption: "Khoảnh khắc kỷ niệm"
+        });
+        renderGalleryManager(weddingData.gallery);
+        showToast("Đã thêm ảnh vào Album!");
+      }
+    });
+  }
+
+  // 7. Tải file MP3 từ máy tính
+  const musicFileInput = document.getElementById("music-file-input");
+  if (musicFileInput) {
+    musicFileInput.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        readFileAsDataUrl(file, (dataUrl) => {
+          setVal("music-url", dataUrl);
+          setVal("music-title", file.name.replace(/\.[^/.]+$/, ""));
+          if (!weddingData.music) weddingData.music = {};
+          weddingData.music.title = file.name.replace(/\.[^/.]+$/, "");
+          weddingData.music.url = dataUrl;
+          showToast("Đã tải bài hát từ máy lên!");
+        });
+        e.target.value = "";
+      }
+    });
+  }
 
   // Nghe thử nhạc
   const btnTestMusic = document.getElementById("btn-test-music");
@@ -390,7 +614,11 @@ function setupHandlers() {
         localStorage.setItem(storageKey, JSON.stringify(weddingData));
         showToast("💾 Đã lưu dữ liệu xem thử trên máy thành công!");
       } catch (err) {
-        alert("Lỗi lưu trữ: " + err.message);
+        console.warn("Lỗi lưu localStorage:", err);
+        alert(
+          "⚠️ Dữ liệu quá lớn để lưu tạm vào bộ nhớ trình duyệt!\n\n" +
+          "💡 Giải pháp: Hãy bấm '🚀 Xuất bản lên GitHub' để lưu và cập nhật trực tiếp lên trang web."
+        );
       }
     });
   }

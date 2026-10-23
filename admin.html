@@ -81,7 +81,7 @@
     <button type="button" class="admin-tab-btn" data-tab="tab-venue">📍 3. Địa Điểm &amp; Bản Đồ</button>
     <button type="button" class="admin-tab-btn" data-tab="tab-couple">💑 4. Cặp Đôi &amp; Gia Đình</button>
     <button type="button" class="admin-tab-btn" data-tab="tab-gift">💳 5. Hộp Mừng Cưới &amp; STK</button>
-    <button type="button" class="admin-tab-btn" data-tab="tab-media">🎵 6. Nhạc Nền &amp; Ảnh Bìa</button>
+    <button type="button" class="admin-tab-btn" data-tab="tab-media">📸 6. Hình Ảnh, Album &amp; Nhạc Nền</button>
     <button type="button" class="admin-tab-btn" data-tab="tab-sync">🚀 7. Xuất Bản &amp; Đồng Bộ</button>
   </nav>
 
@@ -186,13 +186,31 @@
     <!-- TAB 4: CẶP ĐÔI & GIA ĐÌNH -->
     <section class="tab-panel" id="tab-couple">
       <h2 class="panel-title">Thông Tin Chú Rể, Cô Dâu &amp; Phụ Mẫu</h2>
-      <p class="panel-desc">Tùy chỉnh họ tên và thông tin gia đình hai bên.</p>
+      <p class="panel-desc">Tùy chỉnh họ tên, thông tin gia đình hai bên và tải ảnh chân dung cặp đôi.</p>
 
       <div class="form-grid-2">
         <!-- CHÚ RỂ -->
         <div class="admin-card-inner">
           <h3 class="inner-card-title">🎩 Chú Rể &amp; Nhà Trai</h3>
           
+          <div style="display:flex;gap:16px;align-items:center;margin-bottom:16px;flex-wrap:wrap;">
+            <div class="img-preview-box" style="width:110px;height:140px;margin-bottom:0;">
+              <img id="preview-groom-img" src="img/groom.jpg" alt="Ảnh chú rể">
+            </div>
+            <div style="flex:1;min-width:180px;">
+              <label class="btn-upload">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+                </svg>
+                <span>Tải ảnh mới từ máy</span>
+                <input type="file" id="groom-photo-input" accept="image/*" style="display:none">
+              </label>
+              <div class="form-group-admin" style="margin-top:8px;margin-bottom:0;">
+                <input type="text" id="groom-photo" class="input-admin" placeholder="img/groom.jpg" style="font-size:0.82rem;padding:6px 10px;">
+              </div>
+            </div>
+          </div>
+
           <div class="form-group-admin">
             <label for="groom-name">Họ và tên Chú Rể</label>
             <input type="text" id="groom-name" class="input-admin" placeholder="Nguyễn Hoàng Thiên Bình">
@@ -210,7 +228,25 @@
         <!-- CÔ DÂU -->
         <div class="admin-card-inner">
           <h3 class="inner-card-title">🌸 Cô Dâu &amp; Nhà Gái</h3>
-          
+
+          <div style="display:flex;gap:16px;align-items:center;margin-bottom:16px;flex-wrap:wrap;">
+            <div class="img-preview-box" style="width:110px;height:140px;margin-bottom:0;">
+              <img id="preview-bride-img" src="img/bride.jpg" alt="Ảnh cô dâu">
+            </div>
+            <div style="flex:1;min-width:180px;">
+              <label class="btn-upload">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+                </svg>
+                <span>Tải ảnh mới từ máy</span>
+                <input type="file" id="bride-photo-input" accept="image/*" style="display:none">
+              </label>
+              <div class="form-group-admin" style="margin-top:8px;margin-bottom:0;">
+                <input type="text" id="bride-photo" class="input-admin" placeholder="img/bride.jpg" style="font-size:0.82rem;padding:6px 10px;">
+              </div>
+            </div>
+          </div>
+
           <div class="form-group-admin">
             <label for="bride-name">Họ và tên Cô Dâu</label>
             <input type="text" id="bride-name" class="input-admin" placeholder="Kiều Thu Hà">
@@ -249,33 +285,84 @@
             <label for="gift-account-number">Số tài khoản nhận mừng cưới</label>
             <input type="text" id="gift-account-number" class="input-admin" placeholder="6099 1010 10">
           </div>
-          <div class="form-group-admin">
-            <label for="gift-qr-photo">Đường dẫn ảnh QR Code</label>
-            <input type="text" id="gift-qr-photo" class="input-admin" placeholder="img/qr-groom.jpg">
+          <div>
+            <label style="font-size:0.88rem;font-weight:600;color:var(--admin-text);margin-bottom:6px;display:block;">Ảnh QR Code mừng cưới</label>
+            <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;">
+              <div class="img-preview-box" style="width:78px;height:78px;margin-bottom:0;">
+                <img id="preview-qr-img" src="img/qr-groom.jpg" alt="QR Code">
+              </div>
+              <div style="flex:1;min-width:180px;">
+                <label class="btn-upload">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+                  </svg>
+                  <span>Tải ảnh QR từ máy</span>
+                  <input type="file" id="gift-qr-input" accept="image/*" style="display:none">
+                </label>
+                <input type="text" id="gift-qr-photo" class="input-admin" placeholder="img/qr-groom.jpg" style="margin-top:6px;font-size:0.8rem;padding:6px 10px;">
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="form-group-admin">
+        <div class="form-group-admin" style="margin-top:14px;">
           <label for="gift-message">Lời cảm tạ mừng cưới</label>
           <textarea id="gift-message" class="input-admin" rows="3" placeholder="Sự hiện diện hay tình cảm và lời chúc phúc từ phương xa của quý khách đều là niềm vinh hạnh to lớn đối với gia đình chúng tôi!"></textarea>
         </div>
       </div>
     </section>
 
-    <!-- TAB 6: NHẠC NỀN & ẢNH BÌA -->
+    <!-- TAB 6: HÌNH ẢNH, ALBUM & NHẠC NỀN -->
     <section class="tab-panel" id="tab-media">
-      <h2 class="panel-title">Nhạc Nền &amp; Ảnh Bìa Hero Banner</h2>
-      <p class="panel-desc">Tùy biến bài hát phát nền và hình ảnh đại diện của trang web.</p>
+      <h2 class="panel-title">Quản Lý Hình Ảnh, Album Cưới &amp; Nhạc Nền</h2>
+      <p class="panel-desc">Thay đổi ảnh bìa chính (Hero banner), thêm/xóa/sắp xếp ảnh trong album kỷ niệm và cài đặt nhạc nền.</p>
 
-      <div class="admin-card-inner" style="margin-bottom:20px;">
-        <h3 class="inner-card-title">📸 Ảnh Bìa Toàn Màn Hình (Hero Banner)</h3>
-        <div class="form-group-admin">
-          <label for="hero-photo">Đường dẫn ảnh bìa (URL hoặc file nội bộ)</label>
-          <input type="text" id="hero-photo" class="input-admin" placeholder="img/hero-a2b.jpg">
-          <span style="font-size:0.8rem;color:var(--admin-muted);">Trang chính mặc định dùng: <code>img/hero-a2b.jpg</code> (ảnh mới sắc nét).</span>
+      <!-- Hero Banner -->
+      <div class="admin-card-inner" style="margin-bottom:24px;">
+        <h3 class="inner-card-title">✨ Ảnh Bìa Chính (Hero Banner)</h3>
+        <div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap;">
+          <div class="img-preview-box" style="width:140px;height:180px;margin-bottom:0;">
+            <img id="preview-hero-img" src="img/a1b.jpg" alt="Hero banner preview">
+          </div>
+          <div style="flex:1;min-width:240px;">
+            <label class="btn-upload">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+              </svg>
+              <span>Chọn ảnh bìa mới từ máy tính</span>
+              <input type="file" id="hero-photo-input" accept="image/*" style="display:none">
+            </label>
+            <p style="font-size:0.8rem;color:var(--admin-muted);margin-top:6px;">Khuyên dùng ảnh dọc tỷ lệ 4:5 hoặc 9:16 để lên khung vòm đẹp nhất.</p>
+            <div class="form-group-admin" style="margin-top:10px;margin-bottom:0;">
+              <label for="hero-photo" style="font-size:0.8rem;">Đường dẫn ảnh bìa (URL hoặc file nội bộ):</label>
+              <input type="text" id="hero-photo" class="input-admin" placeholder="img/a1b.jpg">
+            </div>
+          </div>
         </div>
       </div>
 
+      <!-- Album Gallery Manager -->
+      <div class="admin-card-inner" style="margin-bottom:24px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:12px;">
+          <h3 class="inner-card-title" style="margin-bottom:0;">📸 Danh Sách Ảnh Trong Album</h3>
+          <div style="display:flex;gap:10px;">
+            <label class="btn-upload">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 5v14M5 12h14"/>
+              </svg>
+              <span>+ Tải ảnh mới từ máy</span>
+              <input type="file" id="add-photo-file-input" accept="image/*" style="display:none">
+            </label>
+            <button type="button" class="btn-upload" id="btn-add-photo-url">+ Thêm bằng Link ảnh</button>
+          </div>
+        </div>
+
+        <div class="gallery-admin-list" id="gallery-admin-list">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+
+      <!-- Nhạc Nền -->
       <div class="admin-card-inner">
         <h3 class="inner-card-title">🎵 Nhạc Nền Thiệp Cưới</h3>
 
@@ -285,11 +372,20 @@
         </div>
 
         <div class="form-group-admin">
-          <label for="music-url">Đường dẫn file MP3</label>
+          <label for="music-url">Đường dẫn file MP3 (URL hoặc file máy)</label>
           <input type="text" id="music-url" class="input-admin" placeholder="audio/moi-duyen-vang.mp3">
         </div>
 
         <div style="display:flex;gap:12px;margin-top:16px;flex-wrap:wrap;">
+          <label class="btn-upload">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 18V5l12-2v13M9 9l12-2"/>
+              <circle cx="6" cy="18" r="3"/>
+              <circle cx="18" cy="16" r="3"/>
+            </svg>
+            <span>Tải bài hát khác từ máy (.mp3)</span>
+            <input type="file" id="music-file-input" accept="audio/mp3,audio/mpeg,audio/*" style="display:none">
+          </label>
           <button type="button" class="btn-upload" id="btn-test-music">▶ Nghe thử bài hát</button>
         </div>
 

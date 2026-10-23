@@ -30,7 +30,7 @@
   "hero": {
     "tag": "LỄ THÀNH HÔN",
     "heading": "Thiệp Mừng Báo Hỷ",
-    "photo": "img/hero-a2b.jpg"
+    "photo": "img/a1b.jpg"
   },
   "quote": {
     "text": "Gặp gỡ là duyên phận, nắm tay là định mệnh, và cùng nhau bước vào lễ đường là lời hứa trọn đời. Cảm ơn vì giữa hàng triệu người trên thế giới, ta đã tìm thấy nhau.",
@@ -47,5 +47,23 @@
   "music": {
     "title": "Mối Duyên Vàng",
     "url": "audio/moi-duyen-vang.mp3"
-  }
+  },
+  "gallery": [
+    {
+      "url": "img/hero-banner.jpg",
+      "caption": "Hạnh phúc trọn vẹn"
+    },
+    {
+      "url": "img/bf712206-6e51-4493-8342-9bc44b9b9900.jpeg",
+      "caption": "Trong khu vườn tình yêu"
+    },
+    {
+      "url": "img/groom_front.jpg",
+      "caption": "Nắm chặt tay nhau"
+    },
+    {
+      "url": "img/bride_front.jpg",
+      "caption": "Bên nhau bình yên"
+    }
+  ]
 }
