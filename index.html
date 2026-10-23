@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Lễ Thành Hôn · Nguyễn Hoàng Thiên Bình &amp; Kiều Thu Hà</title>
+  
+  <meta name="description" content="Trân trọng kính mời quý khách đến tham dự Lễ Thành Hôn của Nguyễn Hoàng Thiên Bình &amp; Kiều Thu Hà vào lúc 17:00 ngày 27/11/2026 tại Tư Gia Nhà Trai.">
+  <meta name="keywords" content="thiệp cưới, lễ thành hôn, Thiên Bình, Thu Hà, thiệp báo hỷ, wedding invitation">
+  <meta name="author" content="Thiên Bình &amp; Thu Hà">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://binhha-wedding.github.io/binhha.html">
+  <meta property="og:title" content="Lễ Thành Hôn · Nguyễn Hoàng Thiên Bình &amp; Kiều Thu Hà">
+  <meta property="og:description" content="Trân trọng kính mời quý khách đến dự Lễ Thành Hôn vào lúc 17:00 Thứ Sáu, 27/11/2026 tại Tư Gia Nhà Trai (Ngõ 8 Lý Thường Kiệt, Vĩnh Yên, Phú Thọ).">
+  <meta property="og:image" content="https://binhha-wedding.github.io/img/hero-groom.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/jpeg" href="img/hero-groom.jpg">
+  <link rel="apple-touch-icon" href="img/hero-groom.jpg">
+
+  <!-- Google Fonts Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Ephesis&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css?v=20261023_1720">
+</head>
+<body data-page="groom">
+
+  <!-- Background Audio (Mối Duyên Vàng) -->
+  <audio id="bg-music" loop preload="auto">
+    <source src="audio/moi-duyen-vang.mp3" type="audio/mpeg">
+    <source src="audio/beautiful-in-white.mp3" type="audio/mpeg">
+    <source src="audio/wedding-music.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Floating Music Player Widget -->
+  <div class="music-widget">
+    <span class="music-tooltip" id="music-tooltip">Chạm để nghe: Mối Duyên Vàng ♫</span>
+    <button class="music-disc-btn" id="music-toggle-btn" type="button" aria-label="Bật hoặc tắt nhạc nền">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Sticky Navigation Bar -->
+  <header class="wd-navbar">
+    <div class="wd-nav-inner">
+      <!-- Logo / Title -->
+      <a href="#top" class="wd-brand">
+        <span>THIỆP MỪNG BÁO HỶ</span>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <ul class="wd-menu-links">
+        <li><a href="#event">Sự Kiện</a></li>
+        <li><a href="#location">Địa Điểm</a></li>
+        <li><a href="#gift">Mừng Online</a></li>
+        <li><a href="#rsvp">Gửi Lời Chúc</a></li>
+      </ul>
+
+      <!-- Mobile Hamburger Button -->
+      <button class="wd-menu-btn" id="menu-toggle-btn" type="button" aria-label="Mở menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+    <!-- Mobile Drawer -->
+    <div class="wd-mobile-drawer" id="mobile-drawer">
+      <ul class="wd-mobile-links">
+        <li>
+          <a href="#event">
+            <span class="nav-icon-badge">
+              <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                <line x1="16" y1="2" x2="16" y2="6"/>
+                <line x1="8" y1="2" x2="8" y2="6"/>
+                <line x1="3" y1="10" x2="21" y2="10"/>
+                <circle cx="12" cy="15" r="1.5" fill="currentColor"/>
+              </svg>
+            </span>
+            <span class="nav-link-text">Hôn Lễ &amp; Đếm Ngược</span>
+            <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="#location">
+            <span class="nav-icon-badge">
+              <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                <circle cx="12" cy="9" r="2.5"/>
+              </svg>
+            </span>
+            <span class="nav-link-text">Bản Đồ &amp; Chỉ Đường</span>
+            <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="#gift">
+            <span class="nav-icon-badge">
+              <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="8" width="18" height="13" rx="2"></rect>
+                <path d="M12 8v13"></path>
+                <path d="M19 12H5"></path>
+                <path d="M12 8a2.5 2.5 0 0 0 0-5 2.5 2.5 0 0 0-4 2.5H12z"></path>
+                <path d="M12 8a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 4 2.5H12z"></path>
+              </svg>
+            </span>
+            <span class="nav-link-text">Mừng Cưới Online (QR)</span>
+            <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="#rsvp">
+            <span class="nav-icon-badge">
+              <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+            </span>
+            <span class="nav-link-text">Xác Nhận Tham Dự &amp; Lời Chúc</span>
+            <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       HERO BANNER (FULL SCREEN BANNER THEO YÊU CẦU NHÀ CHÚ RỂ)
+       ======================================================================== -->
+  <section class="hero-section hero-fullscreen" id="top" style="background-image: url('img/hero-groom.jpg'); background-size: cover; background-position: center top;">
+    <!-- Ảnh cưới full màn hình & lớp phủ gradient điện ảnh -->
+    <div class="hero-bg-media">
+      <img src="img/hero-groom.jpg" id="hero-banner-img" alt="Ảnh cưới Nguyễn Hoàng Thiên Bình &amp; Kiều Thu Hà" fetchpriority="high">
+      <div class="hero-gradient-overlay"></div>
+    </div>
+
+    <div class="hero-content">
+      <!-- Khối chữ phía trên -->
+      <div class="hero-top-block">
+        <div class="hero-ceremony-tag">
+          Lễ Thành Hôn
+        </div>
+
+        <div class="hero-names">
+          <span class="name">THIÊN BÌNH</span>
+          <span class="hero-connector">nên duyên cùng</span>
+          <span class="name">THU HÀ</span>
+        </div>
+      </div>
+
+      <!-- Khoảng sáng tự nhiên dành riêng cho gương mặt của cô dâu chú rể -->
+      <div class="hero-face-clearance" aria-hidden="true"></div>
+
+      <!-- Khối ngày cưới và nút xem thiệp phía dưới -->
+      <div class="hero-bottom-block">
+        <div class="hero-date-badge">
+          Thứ Sáu, <b>27 tháng 11 năm 2026</b>
+        </div>
+        <p class="hero-lunar-date">(Nhằm ngày 19 tháng 10 năm Bính Ngọ)</p>
+
+        <div class="hero-invite-action">
+          <a href="#event" class="hero-scroll-invite">
+            <span>Xem Thiệp Mời &amp; Sự Kiện</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       ARTISTIC QUOTE / THÔNG ĐIỆP TÌNH YÊU
+       ======================================================================== -->
+  <section class="quote-section">
+    <div class="container">
+      <div class="quote-card">
+        <p class="quote-text">
+          “Gặp gỡ là duyên phận, nắm tay là định mệnh, và cùng nhau bước vào lễ đường là lời hứa trọn đời. Cảm ơn vì giữa hàng triệu người trên thế giới, ta đã tìm thấy nhau.”
+        </p>
+        <span class="quote-author">Thiên Bình &amp; Thu Hà</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       SỰ KIỆN: LỄ THÀNH HÔN & LỊCH THÁNG 11/2026 & COUNTDOWN
+       ======================================================================== -->
+  <section class="event-section" id="event">
+    <div class="container">
+      <div class="sec-header">
+        <span class="sec-subtitle">Ngày Chung Đôi</span>
+        <h2 class="sec-title">Thông Tin Hôn Lễ</h2>
+        <div class="sec-divider"></div>
+      </div>
+
+      <div class="event-container-card">
+        <h3 class="ceremony-main-title">LỄ THÀNH HÔN</h3>
+        <p class="ceremony-sub">Được Tổ Chức Tại Nhà Trai</p>
+
+        <!-- Tờ Lịch Tháng 11 Năm 2026 -->
+        <div class="wedding-calendar">
+          <div class="cal-header">Tháng 11 · 2026</div>
+          <div class="cal-grid">
+            <span class="cal-day-label">CN</span>
+            <span class="cal-day-label">T2</span>
+            <span class="cal-day-label">T3</span>
+            <span class="cal-day-label">T4</span>
+            <span class="cal-day-label">T5</span>
+            <span class="cal-day-label">T6</span>
+            <span class="cal-day-label">T7</span>
+
+            <!-- Hàng 1 -->
+            <span class="cal-date">1</span>
+            <span class="cal-date">2</span>
+            <span class="cal-date">3</span>
+            <span class="cal-date">4</span>
+            <span class="cal-date">5</span>
+            <span class="cal-date">6</span>
+            <span class="cal-date">7</span>
+
+            <!-- Hàng 2 -->
+            <span class="cal-date">8</span>
+            <span class="cal-date">9</span>
+            <span class="cal-date">10</span>
+            <span class="cal-date">11</span>
+            <span class="cal-date">12</span>
+            <span class="cal-date">13</span>
+            <span class="cal-date">14</span>
+
+            <!-- Hàng 3 -->
+            <span class="cal-date">15</span>
+            <span class="cal-date">16</span>
+            <span class="cal-date">17</span>
+            <span class="cal-date">18</span>
+            <span class="cal-date">19</span>
+            <span class="cal-date">20</span>
+            <span class="cal-date">21</span>
+
+            <!-- Hàng 4 -->
+            <span class="cal-date">22</span>
+            <span class="cal-date">23</span>
+            <span class="cal-date">24</span>
+            <span class="cal-date">25</span>
+            <span class="cal-date">26</span>
+            <!-- Ngày Lễ Thành Hôn Nhà Trai: Thứ Sáu 27/11/2026 -->
+            <span class="cal-date wedding-day" aria-label="Ngày Lễ Thành Hôn: 27 tháng 11">27</span>
+            <span class="cal-date">28</span>
+
+            <!-- Hàng 5 -->
+            <span class="cal-date">29</span>
+            <span class="cal-date">30</span>
+            <span class="cal-date" style="opacity:0"></span>
+            <span class="cal-date" style="opacity:0"></span>
+            <span class="cal-date" style="opacity:0"></span>
+            <span class="cal-date" style="opacity:0"></span>
+            <span class="cal-date" style="opacity:0"></span>
+          </div>
+        </div>
+
+        <!-- Đồng Hồ Đếm Ngược -->
+        <div class="countdown-container">
+          <div class="countdown-title">Đếm ngược đến giờ lành</div>
+          <div class="countdown-timer">
+            <div class="countdown-item">
+              <span class="countdown-num" id="cd-days">--</span>
+              <span class="countdown-label">Ngày</span>
+            </div>
+            <div class="countdown-item">
+              <span class="countdown-num" id="cd-hours">--</span>
+              <span class="countdown-label">Giờ</span>
+            </div>
+            <div class="countdown-item">
+              <span class="countdown-num" id="cd-minutes">--</span>
+              <span class="countdown-label">Phút</span>
+            </div>
+            <div class="countdown-item">
+              <span class="countdown-num" id="cd-seconds">--</span>
+              <span class="countdown-label">Giây</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chi Tiết Giờ Giấc & Địa Điểm -->
+        <div class="ceremony-details-box">
+          <div class="ceremony-time-large">17:00 · Thứ Sáu, 27/11/2026</div>
+          <div class="ceremony-lunar-highlight">(Tức ngày 19 tháng 10 năm Bính Ngọ)</div>
+          
+          <h4 class="ceremony-venue-name">TƯ GIA NHÀ TRAI</h4>
+          <p class="ceremony-venue-address">
+            Ngõ 8, đường Lý Thường Kiệt, phường Vĩnh Yên, tỉnh Phú Thọ
+          </p>
+
+          <div class="ceremony-actions">
+            <a href="https://maps.google.com/?q=21.309458,105.572574" target="_blank" rel="noopener noreferrer" class="btn-primary">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                <circle cx="12" cy="9" r="2.5"/>
+              </svg>
+              <span>Chỉ Đường Google Maps</span>
+            </a>
+
+            <button type="button" class="btn-secondary" id="btn-add-calendar"
+              data-title="Lễ Thành Hôn: Nguyễn Hoàng Thiên Bình &amp; Kiều Thu Hà"
+              data-details="Lễ Thành Hôn được tổ chức vào lúc 17:00 tại Nhà Trai. Rất hân hạnh được đón tiếp quý khách!"
+              data-location="Ngõ 8, đường Lý Thường Kiệt, phường Vĩnh Yên, tỉnh Phú Thọ"
+              data-dates="20261127T100000Z/20261127T130000Z">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                <line x1="16" y1="2" x2="16" y2="6"/>
+                <line x1="8" y1="2" x2="8" y2="6"/>
+                <line x1="3" y1="10" x2="21" y2="10"/>
+              </svg>
+              <span>Thêm Vào Lịch Nhắc</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       BẢN ĐỒ VỊ TRÍ
+       ======================================================================== -->
+  <section class="map-section" id="location">
+    <div class="container">
+      <div class="sec-header" style="margin-bottom:24px;">
+        <span class="sec-subtitle">Vị Trí Hôn Lễ</span>
+        <h2 class="sec-title">Bản Đồ Chỉ Đường</h2>
+      </div>
+
+      <div class="map-wrapper">
+        <div class="map-iframe-container">
+          <!-- Google Maps Embed for Ngõ 8 Lý Thường Kiệt, Vĩnh Yên, Phú Thọ -->
+          <iframe 
+            src="https://maps.google.com/maps?q=21.309458,105.572574&amp;hl=vi&amp;z=16&amp;output=embed"
+            title="Bản đồ vị trí Nhà Trai: Ngõ 8 Lý Thường Kiệt, Vĩnh Yên, Phú Thọ"
+            loading="lazy" 
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       CHÚC MỪNG ONLINE (STK & QR CHÚ RỂ)
+       ======================================================================== -->
+  <section class="gift-section" id="gift">
+    <div class="container">
+      <div class="sec-header">
+        <span class="sec-subtitle">Hộp Mừng Cưới</span>
+        <h2 class="sec-title">CHÚC MỪNG ONLINE</h2>
+        <p class="gift-note-text">(Dành cho quý khách mừng cưới chú rể Thiên Bình từ xa)</p>
+        <div class="sec-divider"></div>
+      </div>
+
+      <div class="gift-card">
+        <div class="gift-qr-wrapper">
+          <img src="img/qr-groom.jpg" alt="Mã QR mừng cưới Nguyễn Hoàng Thiên Bình - Techcombank" class="gift-qr-img" loading="lazy">
+        </div>
+
+        <div class="gift-bank-info">
+          <div class="gift-info-row">
+            <span class="gift-info-label">Ngân hàng</span>
+            <span class="gift-info-value">Techcombank</span>
+          </div>
+          <div class="gift-info-row">
+            <span class="gift-info-label">Chủ tài khoản</span>
+            <span class="gift-info-value">NGUYEN HOANG THIEN BINH</span>
+          </div>
+          <div class="gift-info-row">
+            <span class="gift-info-label">Số tài khoản</span>
+            <span class="gift-info-value acc-number" id="acc-groom-text">6099 1010 10</span>
+          </div>
+        </div>
+
+        <button type="button" class="btn-copy-acc" data-target="acc-groom-text" data-acc="6099101010" aria-label="Sao chép số tài khoản chú rể">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+          <span>Sao chép số tài khoản Chú Rể</span>
+        </button>
+
+        <p class="gift-gratitude">
+          Sự hiện diện hay tình cảm và lời chúc phúc từ phương xa của quý khách đều là niềm vinh hạnh to lớn đối với gia đình chúng tôi!
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       RSVP XÁC NHẬN & SỔ LƯU BÚT LỜI CHÚC
+       ======================================================================== -->
+  <section class="rsvp-wishes-section" id="rsvp">
+    <div class="container">
+      
+      <div class="sec-header">
+        <span class="sec-subtitle">Gửi Gắm Yêu Thương</span>
+        <h2 class="sec-title">Gửi Lời Chúc &amp; Xác Nhận Tham Dự</h2>
+        <div class="sec-divider"></div>
+      </div>
+
+      <!-- Form Xác Nhận -->
+      <div class="rsvp-box">
+        <form class="rsvp-form" id="rsvp-form">
+          
+          <div class="form-group">
+            <label for="guest-name">Họ và tên của bạn *</label>
+            <input type="text" id="guest-name" class="form-input" placeholder="Ví dụ: Nguyễn Văn A" required>
+          </div>
+
+          <div class="form-group">
+            <label for="guest-role">Bạn là khách mời của chú rể?</label>
+            <select id="guest-role" class="form-select">
+              <option value="Bạn của chú rể Thiên Bình" selected>Bạn của chú rể Thiên Bình</option>
+              <option value="Anh em thân thiết / Chiến hữu">Anh em thân thiết / Chiến hữu</option>
+              <option value="Họ hàng bên nội chú rể">Họ hàng bên nội chú rể</option>
+              <option value="Họ hàng bên ngoại chú rể">Họ hàng bên ngoại chú rể</option>
+              <option value="Đồng nghiệp chú rể">Đồng nghiệp chú rể</option>
+              <option value="Bạn chung cô dâu &amp; chú rể">Bạn chung cô dâu &amp; chú rể</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Bạn sẽ tham dự chung vui cùng chú rể chứ?</label>
+            <div class="form-radio-group">
+              <label class="radio-pill">
+                <input type="radio" name="attend" value="Chắc chắn tham dự" checked>
+                <span>Chắc chắn tham dự</span>
+              </label>
+              <label class="radio-pill">
+                <input type="radio" name="attend" value="Đi cùng người thân (2 người)">
+                <span>Đi cùng người thân</span>
+              </label>
+              <label class="radio-pill">
+                <input type="radio" name="attend" value="Rất tiếc không thể đến">
+                <span>Tiếc là mình bận rồi</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="guest-message">Gửi lời chúc mừng đến chú rể Thiên Bình *</label>
+            <textarea id="guest-message" class="form-textarea" rows="3" placeholder="Gửi những lời chúc mừng và dặn dò tốt đẹp nhất đến chú rể Thiên Bình..." required></textarea>
+          </div>
+
+          <div class="rsvp-alert success" id="rsvp-alert"></div>
+
+          <button type="submit" class="btn-primary" style="width:100%;justify-content:center;margin-top:8px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+            </svg>
+            <span>Gửi Lời Chúc Mừng Đến Chú Rể</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Sổ Lưu Bút Danh Sách Lời Chúc -->
+      <div class="wishes-stream-wrapper">
+        <h3 class="wishes-stream-title">Sổ Lưu Bút Lời Chúc</h3>
+        <div class="wishes-list" id="wishes-list">
+          <!-- Các lời chúc sẽ được JavaScript tự động đổ vào đây -->
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       FOOTER
+       ======================================================================== -->
+  <footer class="wedding-footer">
+    <div class="container">
+      <div class="footer-names">Thiên Bình &amp; Thu Hà</div>
+      <p class="footer-quote">
+        “Hạnh phúc lớn nhất là khi được đồng hành cùng người mình yêu qua mọi năm tháng cuộc đời.”
+      </p>
+      <div class="footer-copy">
+        Cảm ơn quý khách đã đến chung vui cùng gia đình chúng tôi! ♡ 27.11.2026
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================================
+       LIGHTBOX MODAL
+       ======================================================================== -->
+  <div class="lightbox-modal" id="lightbox-modal" aria-hidden="true" role="dialog">
+    <div class="lightbox-content">
+      <button class="lightbox-close-btn" id="lightbox-close" type="button" aria-label="Đóng">&times;</button>
+      <button class="lightbox-nav-btn lightbox-prev" id="lightbox-prev" type="button" aria-label="Ảnh trước">&#10094;</button>
+      <img src="" alt="Ảnh cưới phóng to" class="lightbox-img" id="lightbox-img">
+      <button class="lightbox-nav-btn lightbox-next" id="lightbox-next" type="button" aria-label="Ảnh tiếp theo">&#10095;</button>
+    </div>
+  </div>
+
+  <!-- Thiết lập thời gian đếm ngược chính xác cho Lễ Thành Hôn 17h00 ngày 27/11/2026 -->
+  <script>
+    window.TARGET_WEDDING_DATETIME = new Date("2026-11-27T17:00:00+07:00").getTime();
+    window.currentMusicTitle = "Mối Duyên Vàng";
+  </script>
+
+  <!-- JavaScript -->
+  <script src="js/main.js?v=20261023_1720"></script>
+</body>
+</html>

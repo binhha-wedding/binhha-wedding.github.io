@@ -1,0 +1,51 @@
+{
+  "side": "groom",
+  "bride": {
+    "name": "Kiều Thu Hà",
+    "role": "Cô Dâu",
+    "photo": "img/bride.jpg",
+    "father": "Kiều Hưng",
+    "mother": "Triệu Thị Chinh"
+  },
+  "groom": {
+    "name": "Nguyễn Hoàng Thiên Bình",
+    "role": "Chú Rể",
+    "photo": "img/groom.jpg",
+    "father": "Nguyễn Duy Hiển",
+    "mother": "Phùng Thiên Hương"
+  },
+  "ceremony": {
+    "tag": "Tiệc Mừng Nhà Trai",
+    "title": "LỄ THÀNH HÔN",
+    "subtitle": "Được Tổ Chức Tại Nhà Trai",
+    "datetime": "2026-11-27T17:00:00+07:00",
+    "dateDisplay": "Thứ Sáu, 27 Tháng 11 Năm 2026",
+    "timeDisplay": "17:00 · Thứ Sáu, 27/11/2026",
+    "lunarDate": "19 tháng 10 năm Bính Ngọ",
+    "venueName": "TƯ GIA NHÀ TRAI",
+    "venueAddress": "Ngõ 8, đường Lý Thường Kiệt, phường Vĩnh Yên, tỉnh Phú Thọ",
+    "mapUrl": "https://maps.google.com/?q=21.309458,105.572574",
+    "mapEmbedCoords": "21.309458,105.572574"
+  },
+  "hero": {
+    "tag": "Lễ Thành Hôn",
+    "heading": "Thiệp Mừng Báo Hỷ",
+    "photo": "img/hero-groom.jpg"
+  },
+  "quote": {
+    "text": "Gặp gỡ là duyên phận, nắm tay là định mệnh, và cùng nhau bước vào lễ đường là lời hứa trọn đời. Cảm ơn vì giữa hàng triệu người trên thế giới, ta đã tìm thấy nhau.",
+    "author": "Thiên Bình & Thu Hà"
+  },
+  "music": {
+    "title": "Mối Duyên Vàng",
+    "url": "audio/moi-duyen-vang.mp3"
+  },
+  "gift": {
+    "groom": {
+      "name": "NGUYEN HOANG THIEN BINH",
+      "bank": "Techcombank",
+      "account": "6099 1010 10",
+      "qr": "img/qr-groom.jpg"
+    }
+  }
+}

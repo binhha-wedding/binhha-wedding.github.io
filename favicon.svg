@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="fav-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d4af37"/>
+      <stop offset="50%" stop-color="#bda055"/>
+      <stop offset="100%" stop-color="#8f7226"/>
+    </linearGradient>
+    <linearGradient id="fav-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fdfbf7"/>
+      <stop offset="100%" stop-color="#edf2e4"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background circle badge -->
+  <circle cx="32" cy="32" r="30" fill="url(#fav-bg)" stroke="#4f633a" stroke-width="1.8"/>
+  <circle cx="32" cy="32" r="27" fill="none" stroke="#bda055" stroke-width="0.75" stroke-dasharray="2 1.5"/>
+
+  <!-- Left botanical laurel wreath -->
+  <path d="M 18 42 C 16 34 20 22 30 16" fill="none" stroke="#4f633a" stroke-width="1.4" stroke-linecap="round"/>
+  <path d="M 17 38 C 13 37 13 33 17 32 C 19 33 18 36 17 38 Z" fill="#4f633a"/>
+  <path d="M 18 30 C 14 28 15 24 19 25 C 20 27 19 29 18 30 Z" fill="#758b5c"/>
+  <path d="M 23 22 C 21 18 24 16 27 18 C 27 21 25 22 23 22 Z" fill="#4f633a"/>
+
+  <!-- Right botanical laurel wreath -->
+  <path d="M 46 42 C 48 34 44 22 34 16" fill="none" stroke="#4f633a" stroke-width="1.4" stroke-linecap="round"/>
+  <path d="M 47 38 C 51 37 51 33 47 32 C 45 33 46 36 47 38 Z" fill="#4f633a"/>
+  <path d="M 46 30 C 50 28 49 24 45 25 C 44 27 45 29 46 30 Z" fill="#758b5c"/>
+  <path d="M 41 22 C 43 18 40 16 37 18 C 37 21 39 22 41 22 Z" fill="#4f633a"/>
+
+  <!-- Gold Heart -->
+  <path d="M32 43 C32 43 21 34 21 26 C21 21.5 24.5 18 29 18 C30.8 18 31.6 19 32 19.8 C32.4 19 33.2 18 35 18 C39.5 18 43 21.5 43 26 C43 34 32 43 32 43 Z" fill="none" stroke="url(#fav-gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Monogram letters H & B -->
+  <text x="27.5" y="30" font-family="'Cormorant Garamond', Georgia, serif" font-size="9" font-weight="600" fill="#3b492b" text-anchor="middle">H</text>
+  <text x="32" y="29.5" font-family="'Cormorant Garamond', Georgia, serif" font-size="6.5" font-style="italic" fill="#bda055" text-anchor="middle">♡</text>
+  <text x="36.5" y="30" font-family="'Cormorant Garamond', Georgia, serif" font-size="9" font-weight="600" fill="#3b492b" text-anchor="middle">B</text>
+</svg>
