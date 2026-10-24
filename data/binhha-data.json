@@ -30,10 +30,10 @@
   "hero": {
     "tag": "LỄ THÀNH HÔN",
     "heading": "Thiệp Mừng Báo Hỷ",
-    "photo": "img/a1b.jpg"
+    "photo": "https://drive.google.com/file/d/1qT-bGGCplmu3JIDGYdCvBX9i42btdRpb/view?usp=drivesdk"
   },
   "quote": {
-    "text": "Gặp gỡ là duyên phận, nắm tay là định mệnh, và cùng nhau bước vào lễ đường là lời hứa trọn đời. Cảm ơn vì giữa hàng triệu người trên thế giới, ta đã tìm thấy nhau.",
+    "text": "Không lấy được nhau mùa hạ, ta sẽ lấy nhau mùa đông. Không lấy được nhau ngày trẻ, ta sẽ lấy nhau khi goá bụi về già.",
     "author": "Thiên Bình & Thu Hà"
   },
   "gift": {
@@ -43,25 +43,8 @@
     "title": "Mối Duyên Vàng",
     "url": "audio/moi-duyen-vang.mp3"
   },
-  "gallery": [
-    {
-      "url": "img/hero-banner.jpg",
-      "caption": "Hạnh phúc trọn vẹn"
-    },
-    {
-      "url": "img/bf712206-6e51-4493-8342-9bc44b9b9900.jpeg",
-      "caption": "Trong khu vườn tình yêu"
-    },
-    {
-      "url": "img/groom_front.jpg",
-      "caption": "Nắm chặt tay nhau"
-    },
-    {
-      "url": "img/bride_front.jpg",
-      "caption": "Bên nhau bình yên"
-    }
-  ],
   "footer": {
     "thanks": "Cảm ơn quý khách đã đến chung vui cùng gia đình chúng tôi! ♡ 27.11.2026"
-  }
+  },
+  "gallery": []
 }
