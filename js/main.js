@@ -491,8 +491,10 @@ async function initDynamicData() {
   const isBinhHaPage = window.location.pathname.includes("binhha.html") || 
                        window.location.pathname.includes("/binhha/") ||
                        window.location.pathname.endsWith("/binhha");
+  const isSubdir = window.location.pathname.includes("/binhha/");
+  const pathPrefix = isSubdir ? "../" : "";
   const storageKey = isBinhHaPage ? "binhha_admin_binhha_data" : "binhha_admin_main_data";
-  const jsonPath = isBinhHaPage ? `data/binhha-data.json?v=${Date.now()}` : `data/main-data.json?v=${Date.now()}`;
+  const jsonPath = isBinhHaPage ? `${pathPrefix}data/binhha-data.json?v=${Date.now()}` : `${pathPrefix}data/main-data.json?v=${Date.now()}`;
 
   let data = null;
 
@@ -556,7 +558,10 @@ async function initDynamicData() {
     let heroPhoto = data.hero.photo;
     // Tự động nâng cấp sang ảnh gốc siêu nét Display P3 nếu phát hiện base64 cũ
     if (heroPhoto.startsWith("data:image")) {
-      heroPhoto = isBinhHaPage ? "img/a1b.jpg" : "img/hero-a2b.jpg";
+      heroPhoto = isBinhHaPage ? "img/a1 2.jpg" : "img/hero-a2b.jpg";
+    }
+    if (isSubdir && !heroPhoto.startsWith("http") && !heroPhoto.startsWith("../") && !heroPhoto.startsWith("/")) {
+      heroPhoto = "../" + heroPhoto;
     }
 
     const heroImgEl = document.querySelector("#hero-banner-img");

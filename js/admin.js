@@ -202,7 +202,7 @@ function populateForm(data) {
   }
 
   // 6. Nhạc nền & Ảnh bìa
-  const defaultPhoto = "img/a1b.jpg";
+  const defaultPhoto = currentAdminPage === "main" ? "img/hero-a2b.jpg" : "img/a1 2.jpg";
   const heroPhotoSrc = data.hero?.photo || defaultPhoto;
   setVal("hero-photo", heroPhotoSrc);
   setImgSrc("preview-hero-img", heroPhotoSrc);
@@ -302,7 +302,7 @@ function collectFormData() {
   }
 
   // Hero & Music
-  const defaultPhoto = "img/a1b.jpg";
+  const defaultPhoto = currentAdminPage === "main" ? "img/hero-a2b.jpg" : "img/a1 2.jpg";
   const heroPhoto = document.getElementById("preview-hero-img")?.src || getVal("hero-photo") || defaultPhoto;
   weddingData.hero = {
     tag: getVal("ceremony-tag") || "LỄ THÀNH HÔN",
