@@ -90,7 +90,7 @@ function initCountdown() {
   if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
 
   function update() {
-    const targetDate = window.TARGET_WEDDING_DATETIME || new Date("2026-11-27T17:00:00+07:00").getTime();
+    const targetDate = window.TARGET_WEDDING_DATETIME || new Date("2026-11-27T16:00:00+07:00").getTime();
     const now = new Date().getTime();
     const distance = targetDate - now;
 

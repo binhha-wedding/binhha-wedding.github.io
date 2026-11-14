@@ -234,9 +234,9 @@ function collectFormData() {
 
   // Thời gian
   const dtVal = getVal("ceremony-datetime");
-  let formattedDt = "2026-11-27T17:00:00+07:00";
+  let formattedDt = "2026-11-27T16:00:00+07:00";
   let dateDisp = "Thứ Sáu, 27 Tháng 11 Năm 2026";
-  let timeDisp = "17:00 · Thứ Sáu, 27/11/2026";
+  let timeDisp = "16:00 · Thứ Sáu, 27/11/2026";
 
   if (dtVal) {
     const d = new Date(dtVal);
