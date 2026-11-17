@@ -229,14 +229,14 @@ function collectFormData() {
   };
 
   weddingData.footer = {
-    thanks: getVal("footer-thanks") || "Cảm ơn quý khách đã đến chung vui cùng gia đình chúng tôi! ♡ 27.11.2026"
+    thanks: getVal("footer-thanks") || (currentAdminPage === "main" ? "Cảm ơn quý khách đã đến chung vui cùng gia đình chúng tôi! ♡ 28.11.2026" : "Cảm ơn quý khách đã đến chung vui cùng gia đình chúng tôi! ♡ 27.11.2026")
   };
 
   // Thời gian
   const dtVal = getVal("ceremony-datetime");
-  let formattedDt = "2026-11-27T16:00:00+07:00";
-  let dateDisp = "Thứ Sáu, 27 Tháng 11 Năm 2026";
-  let timeDisp = "16:00 · Thứ Sáu, 27/11/2026";
+  let formattedDt = currentAdminPage === "main" ? "2026-11-28T16:00:00+07:00" : "2026-11-27T16:00:00+07:00";
+  let dateDisp = currentAdminPage === "main" ? "Thứ Bảy, 28 Tháng 11 Năm 2026" : "Thứ Sáu, 27 Tháng 11 Năm 2026";
+  let timeDisp = currentAdminPage === "main" ? "16:00 · Thứ Bảy, 28/11/2026" : "16:00 · Thứ Sáu, 27/11/2026";
 
   if (dtVal) {
     const d = new Date(dtVal);
@@ -258,7 +258,7 @@ function collectFormData() {
     datetime: formattedDt,
     dateDisplay: dateDisp,
     timeDisplay: timeDisp,
-    lunarDate: getVal("ceremony-lunar") || "19 tháng 10 năm Bính Ngọ",
+    lunarDate: getVal("ceremony-lunar") || (currentAdminPage === "main" ? "20 tháng 10 năm Bính Ngọ" : "19 tháng 10 năm Bính Ngọ"),
     venueName: getVal("venue-name") || "TƯ GIA NHÀ TRAI",
     venueAddress: getVal("venue-address") || "Ngõ 8, đường Lý Thường Kiệt, phường Vĩnh Yên, tỉnh Phú Thọ",
     mapUrl: getVal("venue-map-url") || "https://maps.google.com/?q=21.309458,105.572574",

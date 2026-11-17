@@ -90,7 +90,9 @@ function initCountdown() {
   if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
 
   function update() {
-    const targetDate = window.TARGET_WEDDING_DATETIME || new Date("2026-11-27T16:00:00+07:00").getTime();
+    const isBinhHa = window.location.pathname.includes("binhha.html") || window.location.pathname.includes("/binhha/");
+    const defaultFallback = isBinhHa ? "2026-11-27T16:00:00+07:00" : "2026-11-28T16:00:00+07:00";
+    const targetDate = window.TARGET_WEDDING_DATETIME || new Date(defaultFallback).getTime();
     const now = new Date().getTime();
     const distance = targetDate - now;
 
