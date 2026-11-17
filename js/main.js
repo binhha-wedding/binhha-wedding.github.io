@@ -558,7 +558,7 @@ async function initDynamicData() {
     let heroPhoto = data.hero.photo;
     // Tự động nâng cấp sang ảnh gốc siêu nét Display P3 nếu phát hiện base64 cũ
     if (heroPhoto.startsWith("data:image")) {
-      heroPhoto = isBinhHaPage ? "img/a1 2.jpg" : "img/hero-a2b.jpg";
+      heroPhoto = isBinhHaPage ? "img/a1 2.jpg" : "img/hero-banner.jpg";
     }
     if (isSubdir && !heroPhoto.startsWith("http") && !heroPhoto.startsWith("../") && !heroPhoto.startsWith("/")) {
       heroPhoto = "../" + heroPhoto;
